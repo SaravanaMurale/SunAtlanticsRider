@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/orderShipment"
+            android:icon="@drawable/ic_quote"
+            android:title="@string/get_quote"
+            />
+
+        <item
+            android:id="@+id/myProfile"
+            android:icon="@drawable/ic_quote"
+            android:title="@string/my_profile" />
+        <item
+            android:id="@+id/logOut"
+            android:icon="@drawable/ic_quote"
+            android:title="@string/logout" />
+    </group>
+
+    <!--<item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>-->
+
+    <item android:title="">
+        <menu>
+            <item android:title="©2015 Sun Atlantic Sdn. Bhd." />
+            <item android:title="All Rights Reserved." />
+            <item android:title="Version 1.0 26 Apr 2020" />
+
+        </menu>
+    </item>
+
+
+
+
+</menu>
