@@ -7,7 +7,10 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
     <string name="get_quote">Home</string>
+    <string name="my_past_order">My Orders</string>
     <string name="my_profile">My Profile</string>
+    <string name="address">No:1188/928,M.E. Kuppu Swamy Street, Melapedu,Palaved(PO),Avadi I A F,Chennai-600055</string>
     <string name="logout">Logout</string>
 </resources>

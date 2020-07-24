@@ -9,6 +9,11 @@
             android:icon="@drawable/ic_quote"
             android:title="@string/get_quote"
             />
+        <item
+            android:id="@+id/myOrders"
+            android:icon="@drawable/ic_quote"
+            android:title="@string/my_past_order"
+            />
 
         <item
             android:id="@+id/myProfile"

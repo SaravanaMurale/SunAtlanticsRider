@@ -94,7 +94,11 @@ public class DrawerActivity extends AppCompatActivity
 
         } else if (id == R.id.myProfile) {
 
-           // fragment = new UserProfileFragment();
+            // fragment = new UserProfileFragment();
+
+        } else if (id == R.id.myOrders) {
+
+            // fragment = new UserProfileFragment();
 
         } else if (id == R.id.logOut) {
 
