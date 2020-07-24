@@ -18,6 +18,18 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
 
     private Context mCtx;
     List<OrdersResponse> ordersResponseList;
+    OnOrderClickListener onOrderClickListener;
+
+    public OrdersAdapter(Context mCtx, List<OrdersResponse> ordersResponseList, OnOrderClickListener onOrderClickListener) {
+        this.mCtx = mCtx;
+        this.ordersResponseList = ordersResponseList;
+        this.onOrderClickListener = onOrderClickListener;
+    }
+
+    public void setData(List<OrdersResponse> ordersResponseList) {
+        this.ordersResponseList = ordersResponseList;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -32,6 +44,10 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
     @Override
     public void onBindViewHolder(@NonNull OrdersViewHolder holder, int position) {
 
+        holder.trackingNum.setText("" + ordersResponseList.get(position).getTrackingNum());
+        holder.deliveryAddr.setText(ordersResponseList.get(position).getDeliveryAddr());
+        holder.avgCost.setText(ordersResponseList.get(position).getAvgCost());
+
     }
 
     @Override
@@ -42,15 +58,32 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
 
     class OrdersViewHolder extends RecyclerView.ViewHolder {
 
-        TextView trackingNum,deliveryAddr,avgCost;
+        TextView trackingNum, deliveryAddr, avgCost;
 
         public OrdersViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            trackingNum=(TextView)itemView.findViewById(R.id.trackNumber);
-            deliveryAddr=(TextView)itemView.findViewById(R.id.address);
-            avgCost=(TextView)itemView.findViewById(R.id.avgPrice);
+            trackingNum = (TextView) itemView.findViewById(R.id.trackNumber);
+            deliveryAddr = (TextView) itemView.findViewById(R.id.address);
+            avgCost = (TextView) itemView.findViewById(R.id.avgPrice);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    OrdersResponse ordersResponse = ordersResponseList.get(getAdapterPosition());
+                    onOrderClickListener.onOrderClick(ordersResponse);
+
+                }
+            });
+
         }
     }
+
+    public interface OnOrderClickListener {
+
+        public void onOrderClick(OrdersResponse ordersResponse);
+
+    }
+
 
 }
