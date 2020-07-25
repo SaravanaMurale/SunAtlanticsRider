@@ -6,6 +6,12 @@ public class OrdersResponse {
     private String deliveryAddr;
     private int avgCost;
 
+    public OrdersResponse(int trackingNum, String deliveryAddr, int avgCost) {
+        this.trackingNum = trackingNum;
+        this.deliveryAddr = deliveryAddr;
+        this.avgCost = avgCost;
+    }
+
     public int getTrackingNum() {
         return trackingNum;
     }

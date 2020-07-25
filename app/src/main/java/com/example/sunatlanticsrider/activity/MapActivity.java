@@ -4,11 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -36,7 +39,7 @@ import com.google.android.gms.tasks.Task;
 
 import static com.example.sunatlanticsrider.utils.AppConstant.GPS_PROVIDER_CODE;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback,TaskLoadedCallback {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, TaskLoadedCallback {
 
     private GoogleMap mGoogleMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -52,8 +55,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public boolean isGPS;
 
-    MarkerOptions myCurrentLocation,deliveryLocation;
+    MarkerOptions myCurrentLocation, deliveryLocation;
+    Marker myCurrentLocationMarker, deliveryLocationMarker;
     Polyline currentPolyLine;
+
+    Button clickMe;
 
 
     @Override
@@ -69,16 +75,46 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
+        clickMe = (Button) findViewById(R.id.clickMe);
+
+        clickMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callDirectionsAPI();
+            }
+        });
+
         enableGPS();
 
-        myCurrentLocation=new MarkerOptions().position(new LatLng(myLocationLat,myLocationLon)).title("Murali");
-        deliveryLocation=new MarkerOptions().position(new LatLng(13.0087,80.2130)).title("Guindy");
 
-        String url=getUrl(myCurrentLocation.getPosition(),deliveryLocation.getPosition(),"driving");
-        new FetchURL(MapActivity.this).execute(url,"driving");
+    }
+
+    private void callDirectionsAPI() {
+
+        if (myCurrentLocation.getPosition() == null && deliveryLocation.getPosition() == null) {
+
+            Toast.makeText(MapActivity.this, "Position value Is Null", Toast.LENGTH_LONG).show();
 
 
+        } else {
+            System.out.println("MyPositionURL" + myCurrentLocation.getPosition() + " " + deliveryLocation.getPosition());
+            String url = getUrl(myCurrentLocation.getPosition(), deliveryLocation.getPosition(), "driving");
+            new FetchURL(MapActivity.this).execute(url, "driving");
 
+
+        }
+
+
+    }
+
+    private void addMarker(Double lat, Double longi) {
+        myCurrentLocation = new MarkerOptions().position(new LatLng(myLocationLat, myLocationLon)).title("Murali");
+        myCurrentLocationMarker = mGoogleMap.addMarker(myCurrentLocation);
+        myCurrentLocationMarker.showInfoWindow();
+
+        deliveryLocation = new MarkerOptions().position(new LatLng(13.0087, 80.2130)).title("Guindy");
+        deliveryLocationMarker = mGoogleMap.addMarker(deliveryLocation);
+        deliveryLocationMarker.showInfoWindow();
 
     }
 
@@ -94,7 +130,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         // Output format
         String output = "json";
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" +"AIzaSyCnG_pJ7ZVHK3CyT1Y8OG_ortNhgvJbxBQ";
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + "AIzaSyCnG_pJ7ZVHK3CyT1Y8OG_ortNhgvJbxBQ";
         return url;
     }
 
@@ -129,9 +165,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             //Toast.makeText(MapActivity.this, "Get Device Location", Toast.LENGTH_LONG).show();
 
-            getDeviceLocation();
-
-           /* new Handler().postDelayed(new Runnable() {
+            new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
 
@@ -139,7 +173,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 }
             }, 3000);
-*/
 
         } else {
 
@@ -166,8 +199,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 myLocationLat = mLastKnownLocation.getLatitude();
                                 myLocationLon = mLastKnownLocation.getLongitude();
 
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        addMarker(myLocationLat, myLocationLon);
+                                    }
+                                }, 2000);
+
+
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        callDirectionsAPI();
+                                    }
+                                }, 2000);
+
+
                                 System.out.println("MyLocationLatLong" + myLocationLat + " " + myLocationLon);
-                               // moveCamera(myLocationLat, myLocationLon);
+                                moveCamera(myLocationLat, myLocationLon);
 
                             } else if (mLastKnownLocation == null) {
 
@@ -193,9 +242,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                             myLocationLat = mLastKnownLocation.getLatitude();
                                             myLocationLon = mLastKnownLocation.getLongitude();
 
+                                            new Handler().postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    addMarker(myLocationLat, myLocationLon);
+                                                }
+                                            }, 2000);
+
+                                            new Handler().postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    callDirectionsAPI();
+                                                }
+                                            }, 2000);
+
+
                                             System.out.println("MyLocationLatLong" + myLocationLat + " " + myLocationLon);
 
-                                           // moveCamera(myLocationLat, myLocationLon);
+                                            moveCamera(myLocationLat, myLocationLon);
 
 
                                             mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
@@ -225,9 +289,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         //Dialog dialog=LoaderUtil.showProgressBar(MapActivity.this);
 
-       // getAddressFromLatiandLongi(myLocationLat, myLocationLon);
+        // getAddressFromLatiandLongi(myLocationLat, myLocationLon);
 
-       // LoaderUtil.dismisProgressBar(MapActivity.this,dialog);
+        // LoaderUtil.dismisProgressBar(MapActivity.this,dialog);
 
 
     }
@@ -258,14 +322,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 isGPS = true;
 
-                getDeviceLocation();
-
-                /*new Handler().postDelayed(new Runnable() {
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         getDeviceLocation();
                     }
-                }, 10000);*/
+                }, 1000);
 
 
                 Toast.makeText(MapActivity.this, "GetDeviceLocationnn", Toast.LENGTH_LONG).show();
@@ -282,9 +344,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onTaskDone(Object... values) {
 
-        if(currentPolyLine!=null){
+        Toast.makeText(MapActivity.this, "PolyLine Interface Is called", Toast.LENGTH_LONG).show();
+        if (currentPolyLine != null) {
             currentPolyLine.remove();
-            currentPolyLine=mGoogleMap.addPolyline((PolylineOptions) values[0]);
+            currentPolyLine = mGoogleMap.addPolyline((PolylineOptions) values[0]);
+        } else {
+            currentPolyLine = mGoogleMap.addPolyline((PolylineOptions) values[0]);
         }
 
     }

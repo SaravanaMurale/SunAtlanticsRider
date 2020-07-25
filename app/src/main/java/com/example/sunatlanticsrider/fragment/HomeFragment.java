@@ -47,6 +47,9 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
 
         ordersAdapter = new OrdersAdapter(getActivity(), ordersResponseList, HomeFragment.this);
 
+        myCurrentOrderRecyclerView.setAdapter(ordersAdapter);
+
+
         getMyCurrentOrderDetails();
 
         return view;
@@ -54,6 +57,8 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
     }
 
     private void getMyCurrentOrderDetails() {
+        ordersResponseList.add(new OrdersResponse(111, "address", 500));
+        ordersAdapter.setData(ordersResponseList);
 
     }
 

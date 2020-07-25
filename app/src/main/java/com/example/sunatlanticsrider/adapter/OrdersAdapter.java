@@ -46,7 +46,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
 
         holder.trackingNum.setText("" + ordersResponseList.get(position).getTrackingNum());
         holder.deliveryAddr.setText(ordersResponseList.get(position).getDeliveryAddr());
-        holder.avgCost.setText(ordersResponseList.get(position).getAvgCost());
+        holder.avgCost.setText(""+ordersResponseList.get(position).getAvgCost());
 
     }
 
