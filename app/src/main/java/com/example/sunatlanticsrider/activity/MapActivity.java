@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -75,14 +74,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-        clickMe = (Button) findViewById(R.id.clickMe);
-
-        clickMe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callDirectionsAPI();
-            }
-        });
 
         enableGPS();
 
@@ -93,7 +84,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         if (myCurrentLocation.getPosition() == null && deliveryLocation.getPosition() == null) {
 
-            Toast.makeText(MapActivity.this, "Position value Is Null", Toast.LENGTH_LONG).show();
+            // Toast.makeText(MapActivity.this, "Position value Is Null", Toast.LENGTH_LONG).show();
 
 
         } else {
@@ -199,20 +190,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 myLocationLat = mLastKnownLocation.getLatitude();
                                 myLocationLon = mLastKnownLocation.getLongitude();
 
-                                new Handler().postDelayed(new Runnable() {
+                                addMarker(myLocationLat, myLocationLon);
+
+                                /*new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         addMarker(myLocationLat, myLocationLon);
                                     }
-                                }, 2000);
+                                }, 2000);*/
 
+                                callDirectionsAPI();
 
-                                new Handler().postDelayed(new Runnable() {
+                                /*new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         callDirectionsAPI();
                                     }
-                                }, 2000);
+                                }, 2000);*/
 
 
                                 System.out.println("MyLocationLatLong" + myLocationLat + " " + myLocationLon);
@@ -242,7 +236,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                             myLocationLat = mLastKnownLocation.getLatitude();
                                             myLocationLon = mLastKnownLocation.getLongitude();
 
-                                            new Handler().postDelayed(new Runnable() {
+                                            addMarker(myLocationLat, myLocationLon);
+                                            callDirectionsAPI();
+
+                                           /* new Handler().postDelayed(new Runnable() {
                                                 @Override
                                                 public void run() {
                                                     addMarker(myLocationLat, myLocationLon);
@@ -254,7 +251,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                                 public void run() {
                                                     callDirectionsAPI();
                                                 }
-                                            }, 2000);
+                                            }, 2000);*/
 
 
                                             System.out.println("MyLocationLatLong" + myLocationLat + " " + myLocationLon);
@@ -321,6 +318,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 // flag maintain before get location
 
                 isGPS = true;
+
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
