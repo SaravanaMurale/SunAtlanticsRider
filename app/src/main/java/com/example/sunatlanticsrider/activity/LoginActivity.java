@@ -3,6 +3,8 @@ package com.example.sunatlanticsrider.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,8 +16,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.sunatlanticsrider.R;
+import com.example.sunatlanticsrider.model.LoginAuthResponse;
+import com.example.sunatlanticsrider.model.LoginRequest;
+import com.example.sunatlanticsrider.model.LoginResponse;
+import com.example.sunatlanticsrider.retrofit.ApiClient;
+import com.example.sunatlanticsrider.retrofit.ApiInterface;
+import com.example.sunatlanticsrider.utils.LoaderUtil;
 import com.example.sunatlanticsrider.utils.MathUtil;
+import com.example.sunatlanticsrider.utils.PreferenceUtil;
 import com.google.android.material.textfield.TextInputLayout;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.example.sunatlanticsrider.utils.MathUtil.validateMobile;
 import static com.example.sunatlanticsrider.utils.MathUtil.validatePassword;
@@ -29,13 +42,15 @@ public class LoginActivity extends AppCompatActivity {
     Typeface typeface;
     TextView othersignin;
 
+    Dialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        typeface= MathUtil.getOctinPrisonFont(LoginActivity.this);
+        typeface = MathUtil.getOctinPrisonFont(LoginActivity.this);
 
 
         loginMobile = (EditText) findViewById(R.id.login_mobile);
@@ -45,19 +60,78 @@ public class LoginActivity extends AppCompatActivity {
 
         loginMobile.addTextChangedListener(new MyTextWatcher(loginMobile));
         loginPassword.addTextChangedListener(new MyTextWatcher(loginPassword));
-        
+
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
-                launchHomeActivity();
-                
+
+                loginUser();
+
             }
         });
 
     }
 
+    private void loginUser() {
+        dialog = LoaderUtil.showProgressBar(this);
+
+        ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
+        LoginRequest loginRequest = new LoginRequest(loginMobile.getText().toString(), loginPassword.getText().toString());
+        Call<LoginAuthResponse> call = apiInterface.doCheckLogin(loginRequest);
+        call.enqueue(new Callback<LoginAuthResponse>() {
+            @Override
+            public void onResponse(Call<LoginAuthResponse> call, Response<LoginAuthResponse> response) {
+                LoginAuthResponse loginAuthResponse = response.body();
+                if (loginAuthResponse.getAuthToken() != null && loginAuthResponse.getTokenType() != null) {
+
+                    PreferenceUtil.setValueString(LoginActivity.this, PreferenceUtil.AUTH_TOKEN, loginAuthResponse.getAuthToken());
+                    PreferenceUtil.setValueString(LoginActivity.this, PreferenceUtil.BEARER, loginAuthResponse.getTokenType());
+
+
+                    LoaderUtil.dismisProgressBar(LoginActivity.this, dialog);
+
+                    getUserDetails();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginAuthResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getUserDetails() {
+        dialog = LoaderUtil.showProgressBar(this);
+
+        ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
+        Call<LoginResponse> call = apiInterface.doGetUserDetails(PreferenceUtil.getValueString(LoginActivity.this, PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(LoginActivity.this, PreferenceUtil.AUTH_TOKEN));
+
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                LoginResponse loginResponse = response.body();
+
+                PreferenceUtil.setValueSInt(LoginActivity.this, PreferenceUtil.USER_ID, loginResponse.getUserId());
+                LoaderUtil.dismisProgressBar(LoginActivity.this, dialog);
+
+                launchHomeActivity();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
     private void launchHomeActivity() {
+        Intent intent = new Intent(LoginActivity.this, DrawerActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 
