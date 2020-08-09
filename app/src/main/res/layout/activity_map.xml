@@ -10,7 +10,10 @@
     <RelativeLayout
         android:id="@+id/mapBlock"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@id/deliverConfirmBtn"
+        android:layout_marginBottom="@dimen/ten_dp"
+        >
 
         <fragment
             android:id="@+id/map"
@@ -20,5 +23,19 @@
 
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/deliverConfirmBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Delivered"
+        android:layout_margin="@dimen/five_dp"
+        android:background="@color/sun_atlantic_color"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed"
+
+        />
 
 </RelativeLayout>

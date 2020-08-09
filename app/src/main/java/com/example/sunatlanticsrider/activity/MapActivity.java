@@ -58,7 +58,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     Marker myCurrentLocationMarker, deliveryLocationMarker;
     Polyline currentPolyLine;
 
-    Button clickMe;
+    Button clickMe,deliverConfirmBtn;
 
 
     @Override
@@ -74,6 +74,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
+        deliverConfirmBtn=(Button)findViewById(R.id.deliverConfirmBtn);
+
+        deliverConfirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //alert dialog
+            }
+        });
 
         enableGPS();
 
