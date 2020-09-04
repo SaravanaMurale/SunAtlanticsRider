@@ -114,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                 LoginResponse loginResponse = response.body();
 
                 PreferenceUtil.setValueSInt(LoginActivity.this, PreferenceUtil.USER_ID, loginResponse.getUserId());
+
                 LoaderUtil.dismisProgressBar(LoginActivity.this, dialog);
 
                 launchHomeActivity();

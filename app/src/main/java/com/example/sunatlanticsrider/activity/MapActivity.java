@@ -2,7 +2,10 @@ package com.example.sunatlanticsrider.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
@@ -18,7 +21,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sunatlanticsrider.R;
+import com.example.sunatlanticsrider.model.BaseResponse;
+import com.example.sunatlanticsrider.model.OrderRequest;
+import com.example.sunatlanticsrider.retrofit.ApiClient;
+import com.example.sunatlanticsrider.retrofit.ApiInterface;
 import com.example.sunatlanticsrider.utils.GpsUtils;
+import com.example.sunatlanticsrider.utils.LoaderUtil;
+import com.example.sunatlanticsrider.utils.PreferenceUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -35,6 +44,12 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.example.sunatlanticsrider.utils.AppConstant.GPS_PROVIDER_CODE;
 
@@ -58,13 +73,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     Marker myCurrentLocationMarker, deliveryLocationMarker;
     Polyline currentPolyLine;
 
-    Button clickMe,deliverConfirmBtn;
+    Button clickMe, deliverConfirmBtn;
+
+    Double deliveryLocationLat, deliveryLocationLongi;
+    String trackNum;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        Intent intent = getIntent();
+        deliveryLocationLat = Double.parseDouble(intent.getStringExtra("LAT"));
+        deliveryLocationLongi = Double.parseDouble(intent.getStringExtra("LON"));
+        trackNum = intent.getStringExtra("TRACKNUM");
+
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -74,17 +98,64 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-        deliverConfirmBtn=(Button)findViewById(R.id.deliverConfirmBtn);
+        deliverConfirmBtn = (Button) findViewById(R.id.deliverConfirmBtn);
 
         deliverConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //alert dialog
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
+
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        updateOnDeliveryToDelivered();
+
+                    }
+                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        dialogInterface.dismiss();
+
+
+                    }
+                });
+
             }
         });
 
         enableGPS();
 
+
+    }
+
+    private void updateOnDeliveryToDelivered() {
+
+        Dialog dialog = LoaderUtil.showProgressBar(MapActivity.this);
+
+        ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
+
+        OrderRequest orderRequest = new OrderRequest(PreferenceUtil.getValueInt(MapActivity.this, PreferenceUtil.USER_ID), trackNum);
+
+        Call<BaseResponse> call = apiInterface.updateDeliveryProgressStatus(orderRequest);
+
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MapActivity.this, "Thanks For Delivered", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+            }
+        });
 
     }
 
@@ -111,7 +182,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         myCurrentLocationMarker = mGoogleMap.addMarker(myCurrentLocation);
         myCurrentLocationMarker.showInfoWindow();
 
-        deliveryLocation = new MarkerOptions().position(new LatLng(13.0087, 80.2130)).title("Guindy");
+        deliveryLocation = new MarkerOptions().position(new LatLng(deliveryLocationLat, deliveryLocationLat)).title("Guindy");
         deliveryLocationMarker = mGoogleMap.addMarker(deliveryLocation);
         deliveryLocationMarker.showInfoWindow();
 

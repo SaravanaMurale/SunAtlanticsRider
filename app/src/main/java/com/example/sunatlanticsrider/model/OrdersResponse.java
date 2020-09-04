@@ -1,38 +1,78 @@
 package com.example.sunatlanticsrider.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class OrdersResponse {
 
-    private int trackingNum;
-    private String deliveryAddr;
-    private int avgCost;
+    @SerializedName("Username")
+    private String userName;
+    @SerializedName("ServiceName")
+    private String serviceName;
+    @SerializedName("latitude")
+    private String deliveryLat;
+    @SerializedName("longitude")
+    private String deliveryLongi;
+    @SerializedName("trackno")
+    private String trackingNum;
+    @SerializedName("price")
+    private int price;
 
-    public OrdersResponse(int trackingNum, String deliveryAddr, int avgCost) {
-        this.trackingNum = trackingNum;
-        this.deliveryAddr = deliveryAddr;
-        this.avgCost = avgCost;
+    private String deliveryAddress;
+
+
+    public String getUserName() {
+        return userName;
     }
 
-    public int getTrackingNum() {
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getDeliveryLat() {
+        return deliveryLat;
+    }
+
+    public void setDeliveryLat(String deliveryLat) {
+        this.deliveryLat = deliveryLat;
+    }
+
+    public String getDeliveryLongi() {
+        return deliveryLongi;
+    }
+
+    public void setDeliveryLongi(String deliveryLongi) {
+        this.deliveryLongi = deliveryLongi;
+    }
+
+    public String getTrackingNum() {
         return trackingNum;
     }
 
-    public void setTrackingNum(int trackingNum) {
+    public void setTrackingNum(String trackingNum) {
         this.trackingNum = trackingNum;
     }
 
-    public String getDeliveryAddr() {
-        return deliveryAddr;
+    public int getPrice() {
+        return price;
     }
 
-    public void setDeliveryAddr(String deliveryAddr) {
-        this.deliveryAddr = deliveryAddr;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
-    public int getAvgCost() {
-        return avgCost;
+    public String getDeliveryAddress() {
+        return deliveryAddress;
     }
 
-    public void setAvgCost(int avgCost) {
-        this.avgCost = avgCost;
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 }

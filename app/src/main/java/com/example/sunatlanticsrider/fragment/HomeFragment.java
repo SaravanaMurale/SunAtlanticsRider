@@ -1,6 +1,7 @@
 package com.example.sunatlanticsrider.fragment;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,13 +15,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sunatlanticsrider.R;
+import com.example.sunatlanticsrider.activity.LoginActivity;
 import com.example.sunatlanticsrider.activity.MapActivity;
 import com.example.sunatlanticsrider.adapter.OrdersAdapter;
+import com.example.sunatlanticsrider.model.BaseResponse;
+import com.example.sunatlanticsrider.model.OrderRequest;
+import com.example.sunatlanticsrider.model.OrderResponseDTO;
 import com.example.sunatlanticsrider.model.OrdersResponse;
+import com.example.sunatlanticsrider.retrofit.ApiClient;
+import com.example.sunatlanticsrider.retrofit.ApiInterface;
+import com.example.sunatlanticsrider.utils.LoaderUtil;
 import com.example.sunatlanticsrider.utils.PermissionUtils;
+import com.example.sunatlanticsrider.utils.PreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.example.sunatlanticsrider.utils.AppConstant.LOCATION_PERMISSION_REQUEST_CODE;
 
@@ -30,6 +43,8 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
     private RecyclerView myCurrentOrderRecyclerView;
     private OrdersAdapter ordersAdapter;
     private List<OrdersResponse> ordersResponseList;
+
+    Dialog dialog;
 
 
     @Nullable
@@ -57,20 +72,62 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
     }
 
     private void getMyCurrentOrderDetails() {
-        ordersResponseList.add(new OrdersResponse(111, "address", 500));
-        ordersAdapter.setData(ordersResponseList);
+
+        dialog = LoaderUtil.showProgressBar(getActivity());
+
+        ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
+
+        String token = PreferenceUtil.getValueString(getActivity(), PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(getActivity(), PreferenceUtil.AUTH_TOKEN);
+        int userId = PreferenceUtil.getValueInt(getActivity(), PreferenceUtil.USER_ID);
+        System.out.println("TOKENID" + token + " " + userId);
+
+        //OrderRequest orderRequest = new OrderRequest(userId, "Sun007");
+
+        Call<OrderResponseDTO> call = apiInterface.getMyOrderDetails(PreferenceUtil.getValueString(getActivity(), PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(getActivity(), PreferenceUtil.AUTH_TOKEN), PreferenceUtil.getValueInt(getActivity(), PreferenceUtil.USER_ID));
+
+        call.enqueue(new Callback<OrderResponseDTO>() {
+            @Override
+            public void onResponse(Call<OrderResponseDTO> call, Response<OrderResponseDTO> response) {
+
+                if (response.isSuccessful()) {
+
+                    OrderResponseDTO orderResponseDTO = response.body();
+
+                    List<OrdersResponse> ordersResponses = orderResponseDTO.getOrdersResponseList();
+
+                    ordersAdapter.setData(ordersResponses);
+
+
+                }
+
+                LoaderUtil.dismisProgressBar(getContext(), dialog);
+
+
+            }
+
+            @Override
+            public void onFailure(Call<OrderResponseDTO> call, Throwable t) {
+
+            }
+        });
+
+
+        /*ordersResponseList.add(new OrdersResponse(111, "address", 500));
+        ordersAdapter.setData(ordersResponseList);*/
 
     }
 
     @Override
     public void onOrderClick(OrdersResponse ordersResponse) {
 
-        checkLocationPermission();
+
+
+        checkLocationPermission(ordersResponse);
 
 
     }
 
-    private void checkLocationPermission() {
+    private void checkLocationPermission(OrdersResponse ordersResponse) {
 
         if (!PermissionUtils.hasPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 && !PermissionUtils.hasPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
@@ -83,14 +140,60 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
             if (PermissionUtils.hasPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                     && PermissionUtils.hasPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
 
+                String trackNum=PreferenceUtil.getValueString(getActivity(),PreferenceUtil.TRACKING_NUM);
+
+                if(!trackNum.equals(ordersResponse.getTrackingNum())){
+                    updateStatusInProgressToOnDelivery(ordersResponse);
+                }
+
+
 
                 Intent intent = new Intent(getActivity(), MapActivity.class);
+                intent.putExtra("LAT", ordersResponse.getDeliveryLat());
+                intent.putExtra("LON", ordersResponse.getDeliveryLongi());
+                intent.putExtra("TRACKNUM",ordersResponse.getTrackingNum());
                 startActivity(intent);
 
 
             }
 
         }
+
+    }
+
+    private void updateStatusInProgressToOnDelivery(final OrdersResponse ordersResponse) {
+
+        dialog = LoaderUtil.showProgressBar(getActivity());
+
+        ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
+
+        OrderRequest orderRequest = new OrderRequest(PreferenceUtil.getValueInt(getActivity(), PreferenceUtil.USER_ID), ordersResponse.getTrackingNum());
+
+        Call<BaseResponse> call = apiInterface.updateDeliveryProgressStatus(orderRequest);
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+                BaseResponse baseResponse = response.body();
+
+
+                if (baseResponse.getSuccess()) {
+                    System.out.println("InProgressToOnDelivery");
+
+                    PreferenceUtil.setValueString(getActivity(),PreferenceUtil.TRACKING_NUM,ordersResponse.getTrackingNum());
+
+                }
+
+                LoaderUtil.dismisProgressBar(getActivity(), dialog);
+
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+            }
+        });
+
 
     }
 }

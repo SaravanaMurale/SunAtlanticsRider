@@ -1,6 +1,7 @@
 package com.example.sunatlanticsrider.adapter;
 
 import android.content.Context;
+import android.location.Address;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sunatlanticsrider.R;
 import com.example.sunatlanticsrider.model.OrdersResponse;
+import com.example.sunatlanticsrider.utils.GpsUtils;
 
 import java.util.List;
 
@@ -45,8 +47,27 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
     public void onBindViewHolder(@NonNull OrdersViewHolder holder, int position) {
 
         holder.trackingNum.setText("" + ordersResponseList.get(position).getTrackingNum());
-        holder.deliveryAddr.setText(ordersResponseList.get(position).getDeliveryAddr());
-        holder.avgCost.setText(""+ordersResponseList.get(position).getAvgCost());
+        holder.avgCost.setText("" + ordersResponseList.get(position).getPrice());
+
+        double myLocationLat = Double.parseDouble(ordersResponseList.get(position).getDeliveryLat());
+        double myLocationLon = Double.parseDouble(ordersResponseList.get(position).getDeliveryLongi());
+        List<Address> geoAddresses = GpsUtils.getAddressFromMap(mCtx, myLocationLat, myLocationLon);
+
+        if (geoAddresses.size() != 0) {
+
+            String address = geoAddresses.get(0).getAddressLine(0);
+            String area = geoAddresses.get(0).getLocality();
+            String city = geoAddresses.get(0).getAdminArea();
+            String country = geoAddresses.get(0).getCountryName();
+            String postalCode = geoAddresses.get(0).getPostalCode();
+            String subAdminArea = geoAddresses.get(0).getSubAdminArea();
+
+            ordersResponseList.get(position).setDeliveryAddress(address + " " + area + " " + city + " " + subAdminArea + " " + postalCode);
+        }
+
+
+        holder.deliveryAddr.setText(ordersResponseList.get(position).getDeliveryAddress());
+
 
     }
 

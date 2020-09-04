@@ -35,7 +35,7 @@ public class MathUtil {
 
     public static Typeface getOctinPrisonFont(Context context) {
 
-        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf");
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
 
         return typeface;
 
