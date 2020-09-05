@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sunatlanticsrider.R;
-import com.example.sunatlanticsrider.activity.LoginActivity;
 import com.example.sunatlanticsrider.activity.MapActivity;
 import com.example.sunatlanticsrider.adapter.OrdersAdapter;
 import com.example.sunatlanticsrider.model.BaseResponse;

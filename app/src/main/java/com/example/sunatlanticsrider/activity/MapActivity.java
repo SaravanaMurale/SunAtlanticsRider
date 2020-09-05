@@ -87,6 +87,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Intent intent = getIntent();
         deliveryLocationLat = Double.parseDouble(intent.getStringExtra("LAT"));
         deliveryLocationLongi = Double.parseDouble(intent.getStringExtra("LON"));
+
+        System.out.println("MApDel"+deliveryLocationLat+" "+deliveryLocationLongi);
+
         trackNum = intent.getStringExtra("TRACKNUM");
 
 
@@ -125,83 +128,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     }
                 });
 
+                builder.show();
+
             }
         });
 
         enableGPS();
 
 
-    }
-
-    private void updateOnDeliveryToDelivered() {
-
-        Dialog dialog = LoaderUtil.showProgressBar(MapActivity.this);
-
-        ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
-
-        OrderRequest orderRequest = new OrderRequest(PreferenceUtil.getValueInt(MapActivity.this, PreferenceUtil.USER_ID), trackNum);
-        String token = PreferenceUtil.getValueString(MapActivity.this, PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(MapActivity.this, PreferenceUtil.AUTH_TOKEN);
-        Call<BaseResponse> call = apiInterface.updateDeliveryProgressStatus(token, orderRequest);
-
-        call.enqueue(new Callback<BaseResponse>() {
-            @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(MapActivity.this, "Thanks For Delivered", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
-
-            }
-        });
-
-    }
-
-    private void callDirectionsAPI() {
-
-        if (myCurrentLocation.getPosition() == null && deliveryLocation.getPosition() == null) {
-
-            // Toast.makeText(MapActivity.this, "Position value Is Null", Toast.LENGTH_LONG).show();
-
-
-        } else {
-            System.out.println("MyPositionURL" + myCurrentLocation.getPosition() + " " + deliveryLocation.getPosition());
-            String url = getUrl(myCurrentLocation.getPosition(), deliveryLocation.getPosition(), "driving");
-            new FetchURL(MapActivity.this).execute(url, "driving");
-
-
-        }
-
-
-    }
-
-    private void addMarker(Double lat, Double longi) {
-        myCurrentLocation = new MarkerOptions().position(new LatLng(myLocationLat, myLocationLon)).title("Murali");
-        myCurrentLocationMarker = mGoogleMap.addMarker(myCurrentLocation);
-        myCurrentLocationMarker.showInfoWindow();
-
-        deliveryLocation = new MarkerOptions().position(new LatLng(deliveryLocationLat, deliveryLocationLat)).title("Guindy");
-        deliveryLocationMarker = mGoogleMap.addMarker(deliveryLocation);
-        deliveryLocationMarker.showInfoWindow();
-
-    }
-
-    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
-        // Origin of route
-        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-        // Destination of route
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-        // Mode
-        String mode = "mode=" + directionMode;
-        // Building the parameters to the web service
-        String parameters = str_origin + "&" + str_dest + "&" + mode;
-        // Output format
-        String output = "json";
-        // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + "AIzaSyCnG_pJ7ZVHK3CyT1Y8OG_ortNhgvJbxBQ";
-        return url;
     }
 
     @SuppressLint("MissingPermission")
@@ -269,23 +203,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 myLocationLat = mLastKnownLocation.getLatitude();
                                 myLocationLon = mLastKnownLocation.getLongitude();
 
-                                addMarker(myLocationLat, myLocationLon);
+                                //addMarker(myLocationLat, myLocationLon);
 
-                                /*new Handler().postDelayed(new Runnable() {
+                                new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         addMarker(myLocationLat, myLocationLon);
                                     }
-                                }, 2000);*/
+                                }, 2000);
 
-                                callDirectionsAPI();
+                               // callDirectionsAPI();
 
-                                /*new Handler().postDelayed(new Runnable() {
+                                new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         callDirectionsAPI();
                                     }
-                                }, 2000);*/
+                                }, 2000);
 
 
                                 System.out.println("MyLocationLatLong" + myLocationLat + " " + myLocationLon);
@@ -316,6 +250,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                             myLocationLon = mLastKnownLocation.getLongitude();
 
                                             addMarker(myLocationLat, myLocationLon);
+
                                             callDirectionsAPI();
 
                                            /* new Handler().postDelayed(new Runnable() {
@@ -357,6 +292,53 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 });
 
 
+    }
+
+
+
+    private void addMarker(Double lat, Double longi) {
+        myCurrentLocation = new MarkerOptions().position(new LatLng(myLocationLat, myLocationLon)).title("Murali");
+        myCurrentLocationMarker = mGoogleMap.addMarker(myCurrentLocation);
+        myCurrentLocationMarker.showInfoWindow();
+
+        deliveryLocation = new MarkerOptions().position(new LatLng(deliveryLocationLat, deliveryLocationLongi)).title("Guindy");
+        deliveryLocationMarker = mGoogleMap.addMarker(deliveryLocation);
+        deliveryLocationMarker.showInfoWindow();
+
+    }
+
+    private void callDirectionsAPI() {
+
+        if (myCurrentLocation.getPosition() == null && deliveryLocation.getPosition() == null) {
+
+            // Toast.makeText(MapActivity.this, "Position value Is Null", Toast.LENGTH_LONG).show();
+
+
+        } else {
+            System.out.println("MyPositionURL" + myCurrentLocation.getPosition() + " " + deliveryLocation.getPosition());
+            String url = getUrl(myCurrentLocation.getPosition(), deliveryLocation.getPosition(), "driving");
+            new FetchURL(MapActivity.this).execute(url, "driving");
+
+
+        }
+
+
+    }
+
+    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
+        // Origin of route
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+        // Destination of route
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+        // Mode
+        String mode = "mode=" + directionMode;
+        // Building the parameters to the web service
+        String parameters = str_origin + "&" + str_dest + "&" + mode;
+        // Output format
+        String output = "json";
+        // Building the url to the web service
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + "AIzaSyCnG_pJ7ZVHK3CyT1Y8OG_ortNhgvJbxBQ";
+        return url;
     }
 
     private void moveCamera(Double myLocationLat, Double myLocationLon) {
@@ -428,6 +410,32 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         } else {
             currentPolyLine = mGoogleMap.addPolyline((PolylineOptions) values[0]);
         }
+
+    }
+
+    private void updateOnDeliveryToDelivered() {
+
+        Dialog dialog = LoaderUtil.showProgressBar(MapActivity.this);
+
+        ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
+
+        OrderRequest orderRequest = new OrderRequest(PreferenceUtil.getValueInt(MapActivity.this, PreferenceUtil.USER_ID), trackNum);
+        String token = PreferenceUtil.getValueString(MapActivity.this, PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(MapActivity.this, PreferenceUtil.AUTH_TOKEN);
+        Call<BaseResponse> call = apiInterface.updateDeliveryProgressStatus(token, orderRequest);
+
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MapActivity.this, "Thanks For Delivered", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+            }
+        });
 
     }
 }
