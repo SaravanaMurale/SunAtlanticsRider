@@ -4,9 +4,12 @@ import com.example.sunatlanticsrider.model.BaseResponse;
 import com.example.sunatlanticsrider.model.LoginAuthResponse;
 import com.example.sunatlanticsrider.model.LoginRequest;
 import com.example.sunatlanticsrider.model.LoginResponse;
+import com.example.sunatlanticsrider.model.MobileNumUpdateRequest;
 import com.example.sunatlanticsrider.model.OrderRequest;
 import com.example.sunatlanticsrider.model.OrderResponseDTO;
 import com.example.sunatlanticsrider.model.OrdersResponse;
+import com.example.sunatlanticsrider.model.PasswordUpdateRequest;
+import com.example.sunatlanticsrider.model.UserNameUpdateRequest;
 import com.example.sunatlanticsrider.utils.BaseURL;
 
 import java.util.List;
@@ -55,9 +58,28 @@ public interface ApiInterface {
     @Headers({"Content-Type:application/json"})
     Call<OrderResponseDTO> getMyCurrentOrders(@Header("Authorization") String token,@Path("userid") int user_id);
 
+    @GET(BaseURL.DOMAIN_NAME + "orderList/{userid}")
+    @Headers({"Content-Type:application/json"})
+    Call<BaseResponse> getmyPreviousOrders(@Header("Authorization") String token,@Path("userid") int user_id);
+
     @PUT(BaseURL.DOMAIN_NAME + "updateStatus")
     @Headers({"Content-Type:application/json"})
     Call<BaseResponse> updateDeliveryProgressStatus(@Header("Authorization") String token,@Body OrderRequest orderRequest);
+
+    @PUT(BaseURL.DOMAIN_NAME + "updateMobileno")
+    @Headers({"Content-Type:application/json"})
+    Call<BaseResponse> updateMobileNumber(@Header("Authorization") String token, @Body MobileNumUpdateRequest mobileNumUpdateRequest);
+
+
+    @PUT(BaseURL.DOMAIN_NAME + "updateuserName")
+    @Headers({"Content-Type:application/json"})
+    Call<BaseResponse> updateUserName(@Header("Authorization") String token, @Body UserNameUpdateRequest userNameUpdateRequest);
+
+
+    @PUT(BaseURL.DOMAIN_NAME + "updatePassword")
+    @Headers({"Content-Type:application/json"})
+    Call<BaseResponse> updatePassword(@Header("Authorization") String token, @Body PasswordUpdateRequest passwordUpdateRequest);
+
 
 
 }

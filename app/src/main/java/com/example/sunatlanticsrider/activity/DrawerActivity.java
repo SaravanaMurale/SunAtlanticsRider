@@ -1,5 +1,6 @@
 package com.example.sunatlanticsrider.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -14,6 +15,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.sunatlanticsrider.R;
 import com.example.sunatlanticsrider.fragment.HomeFragment;
+import com.example.sunatlanticsrider.fragment.MyPastOrdersFragment;
+import com.example.sunatlanticsrider.utils.PreferenceUtil;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -98,10 +101,12 @@ public class DrawerActivity extends AppCompatActivity
 
         } else if (id == R.id.myOrders) {
 
-            // fragment = new UserProfileFragment();
+             fragment = new MyPastOrdersFragment();
 
         } else if (id == R.id.logOut) {
 
+            callLoginActivity();
+            
         }
 
         if (fragment != null) {
@@ -115,5 +120,15 @@ public class DrawerActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void callLoginActivity() {
+
+        PreferenceUtil.clear(DrawerActivity.this);
+
+        Intent intent = new Intent(DrawerActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+
     }
 }

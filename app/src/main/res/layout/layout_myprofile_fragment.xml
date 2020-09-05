@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/ten_dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/five_dp"
+        android:layout_marginTop="@dimen/ten_dp"
+        android:text="My Profile"
+        android:textColor="@color/black"
+        android:textSize="@dimen/twenty_sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/profileIcon"
+        android:layout_width="@dimen/thirty_dp"
+        android:layout_height="@dimen/thirty_dp"
+        android:layout_marginTop="@dimen/seventy_dp"
+        android:src="@drawable/ic_name" />
+
+    <TextView
+        android:id="@+id/accountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/profileIcon"
+        android:layout_marginLeft="@dimen/five_dp"
+        android:layout_marginTop="@dimen/seventy_five_dp"
+        android:layout_toRightOf="@id/profileIcon"
+        android:text="Account"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/accountText"
+        android:layout_marginTop="@dimen/ten_dp"
+        android:background="@color/black"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/userNameBlock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view"
+        android:layout_marginTop="@dimen/twenty_sp"
+        android:padding="@dimen/ten_dp">
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saravana Murali" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/arrow" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/userNameBlock"
+        android:layout_marginTop="@dimen/ten_dp"
+        android:background="@color/grey" />
+
+
+    <RelativeLayout
+        android:id="@+id/mobileNumberBlock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userNameBlock"
+        android:layout_marginTop="@dimen/twenty_sp"
+
+        android:padding="@dimen/ten_dp">
+
+        <TextView
+            android:id="@+id/mobileNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9123521374" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/arrow" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/mobileNumberBlock"
+        android:layout_marginTop="@dimen/ten_dp"
+        android:background="@color/grey" />
+
+
+    <RelativeLayout
+        android:id="@+id/emailBlock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mobileNumberBlock"
+        android:layout_marginTop="@dimen/twenty_sp"
+
+        android:padding="@dimen/ten_dp">
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="saravanamurali24@gmail.com" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/arrow" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/emailBlock"
+        android:layout_marginTop="@dimen/ten_dp"
+        android:background="@color/grey" />
+
+
+    <RelativeLayout
+        android:id="@+id/passwordBlock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/emailBlock"
+        android:layout_marginTop="@dimen/twenty_sp"
+        android:padding="@dimen/ten_dp">
+
+        <TextView
+            android:id="@+id/changePassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="password" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/arrow" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -14,10 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sunatlanticsrider.R;
 import com.example.sunatlanticsrider.adapter.PastOrderAdapter;
+import com.example.sunatlanticsrider.model.BaseResponse;
 import com.example.sunatlanticsrider.model.MyPastOrderResponse;
+import com.example.sunatlanticsrider.retrofit.ApiClient;
+import com.example.sunatlanticsrider.retrofit.ApiInterface;
+import com.example.sunatlanticsrider.utils.PreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
 
 public class MyPastOrdersFragment extends Fragment {
 
@@ -41,6 +47,21 @@ public class MyPastOrdersFragment extends Fragment {
         pastOrderAdapter = new PastOrderAdapter(getActivity(), myPastOrderResponseList);
         pastOrderRecyclerView.setAdapter(pastOrderAdapter);
 
+        getMyPastOrderList();
+
         return view;
+    }
+
+    private void getMyPastOrderList() {
+
+        ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
+
+        String token = PreferenceUtil.getValueString(getActivity(), PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(getActivity(), PreferenceUtil.AUTH_TOKEN);
+
+        int userId = PreferenceUtil.getValueInt(getActivity(), PreferenceUtil.USER_ID);
+
+        Call<BaseResponse> call = apiInterface.getmyPreviousOrders(token, userId);
+
+
     }
 }
