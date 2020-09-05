@@ -63,17 +63,9 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
 
         List<Address> geoAddresses = GpsUtils.getAddressFromMap(mCtx, myLocationLat, myLocationLon);
 
-        if (geoAddresses.size() != 0) {
+        String fullAddress = GpsUtils.getFullAddress(geoAddresses);
 
-            String address = geoAddresses.get(0).getAddressLine(0);
-            String area = geoAddresses.get(0).getLocality();
-            String city = geoAddresses.get(0).getAdminArea();
-            String country = geoAddresses.get(0).getCountryName();
-            String postalCode = geoAddresses.get(0).getPostalCode();
-            String subAdminArea = geoAddresses.get(0).getSubAdminArea();
-
-            ordersResponseList.get(position).setDeliveryAddress(address + " " + area + " " + city + " " + subAdminArea + " " + postalCode);
-        }
+        ordersResponseList.get(position).setDeliveryAddress(fullAddress);
 
 
         holder.deliveryAddr.setText(ordersResponseList.get(position).getDeliveryAddress());

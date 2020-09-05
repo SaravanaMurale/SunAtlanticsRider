@@ -415,7 +415,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void updateOnDeliveryToDelivered() {
 
-        Dialog dialog = LoaderUtil.showProgressBar(MapActivity.this);
+        final Dialog dialog = LoaderUtil.showProgressBar(MapActivity.this);
 
         ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
 
@@ -426,9 +426,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         call.enqueue(new Callback<BaseResponse>() {
             @Override
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+                LoaderUtil.dismisProgressBar(MapActivity.this,dialog);
                 if (response.isSuccessful()) {
                     Toast.makeText(MapActivity.this, "Thanks For Delivered", Toast.LENGTH_LONG).show();
                 }
+
             }
 
             @Override

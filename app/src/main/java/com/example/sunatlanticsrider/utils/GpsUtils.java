@@ -104,7 +104,6 @@ public class GpsUtils {
     }
 
 
-
     public interface onGpsListener {
         void gpsStatus(boolean isGPSEnable);
     }
@@ -126,6 +125,26 @@ public class GpsUtils {
 
         return geoAddresses;
 
+
+    }
+
+    public static String getFullAddress(List<Address> geoAddresses) {
+
+        String fullAddress = "";
+
+        if (geoAddresses.size() != 0) {
+
+            String address = geoAddresses.get(0).getAddressLine(0);
+            String area = geoAddresses.get(0).getLocality();
+            String city = geoAddresses.get(0).getAdminArea();
+            String country = geoAddresses.get(0).getCountryName();
+            String postalCode = geoAddresses.get(0).getPostalCode();
+            String subAdminArea = geoAddresses.get(0).getSubAdminArea();
+
+            fullAddress = address + " " + area + " " + city + " " + subAdminArea + " " + postalCode;
+        }
+
+        return fullAddress;
 
     }
 
@@ -158,7 +177,6 @@ public class GpsUtils {
     private double rad2deg(double rad) {
         return (rad * 180.0 / Math.PI);
     }
-
 
 
 }
