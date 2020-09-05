@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sunatlanticsrider.R;
 import com.example.sunatlanticsrider.model.OrdersResponse;
 import com.example.sunatlanticsrider.utils.GpsUtils;
+import com.example.sunatlanticsrider.utils.MathUtil;
 
 import java.util.List;
 
@@ -49,8 +50,17 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
         holder.trackingNum.setText("" + ordersResponseList.get(position).getTrackingNum());
         holder.avgCost.setText("" + ordersResponseList.get(position).getPrice());
 
-        double myLocationLat = Double.parseDouble(ordersResponseList.get(position).getDeliveryLat());
-        double myLocationLon = Double.parseDouble(ordersResponseList.get(position).getDeliveryLongi());
+        String strL = ordersResponseList.get(position).getDeliveryLat();
+        String strLong = ordersResponseList.get(position).getDeliveryLongi();
+        System.out.println("YESSSS" + strL + " " + strLong);
+
+        /*Double myLocationLat=new Double(strL);
+        Double myLocationLon=new Double(strLong);
+*/
+        double myLocationLat = MathUtil.stringToDouble(strL);
+        double myLocationLon = MathUtil.stringToDouble(strLong);
+
+
         List<Address> geoAddresses = GpsUtils.getAddressFromMap(mCtx, myLocationLat, myLocationLon);
 
         if (geoAddresses.size() != 0) {

@@ -73,53 +73,44 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
 
     private void getMyCurrentOrderDetails() {
 
-        dialog = LoaderUtil.showProgressBar(getActivity());
-
         ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
 
         String token = PreferenceUtil.getValueString(getActivity(), PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(getActivity(), PreferenceUtil.AUTH_TOKEN);
+
         int userId = PreferenceUtil.getValueInt(getActivity(), PreferenceUtil.USER_ID);
-        System.out.println("TOKENID" + token + " " + userId);
 
-        //OrderRequest orderRequest = new OrderRequest(userId, "Sun007");
+        System.out.println("USERID "+userId+" "+token);
 
-        Call<OrderResponseDTO> call = apiInterface.getMyOrderDetails(PreferenceUtil.getValueString(getActivity(), PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(getActivity(), PreferenceUtil.AUTH_TOKEN), PreferenceUtil.getValueInt(getActivity(), PreferenceUtil.USER_ID));
+        Call<OrderResponseDTO> call = apiInterface.getMyCurrentOrders(token, userId);
+
+        System.out.println("Iamhere");
 
         call.enqueue(new Callback<OrderResponseDTO>() {
             @Override
             public void onResponse(Call<OrderResponseDTO> call, Response<OrderResponseDTO> response) {
 
-                if (response.isSuccessful()) {
+                System.out.println("OrderResponse" + response.body());
 
-                    OrderResponseDTO orderResponseDTO = response.body();
+                OrderResponseDTO orderResponseDTO = response.body();
+                List<OrdersResponse> ordersResponses = orderResponseDTO.getOrdersResponseList();
 
-                    List<OrdersResponse> ordersResponses = orderResponseDTO.getOrdersResponseList();
-
-                    ordersAdapter.setData(ordersResponses);
-
-
-                }
-
-                LoaderUtil.dismisProgressBar(getContext(), dialog);
+                ordersAdapter.setData(ordersResponses);
 
 
             }
 
             @Override
             public void onFailure(Call<OrderResponseDTO> call, Throwable t) {
-
+                System.out.println("Error" + t.getMessage().toString());
             }
         });
 
 
-        /*ordersResponseList.add(new OrdersResponse(111, "address", 500));
-        ordersAdapter.setData(ordersResponseList);*/
-
     }
+
 
     @Override
     public void onOrderClick(OrdersResponse ordersResponse) {
-
 
 
         checkLocationPermission(ordersResponse);
@@ -140,18 +131,17 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
             if (PermissionUtils.hasPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                     && PermissionUtils.hasPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
 
-                String trackNum=PreferenceUtil.getValueString(getActivity(),PreferenceUtil.TRACKING_NUM);
+                String trackNum = PreferenceUtil.getValueString(getActivity(), PreferenceUtil.TRACKING_NUM);
 
-                if(!trackNum.equals(ordersResponse.getTrackingNum())){
+                if (!trackNum.equals(ordersResponse.getTrackingNum())) {
                     updateStatusInProgressToOnDelivery(ordersResponse);
                 }
-
 
 
                 Intent intent = new Intent(getActivity(), MapActivity.class);
                 intent.putExtra("LAT", ordersResponse.getDeliveryLat());
                 intent.putExtra("LON", ordersResponse.getDeliveryLongi());
-                intent.putExtra("TRACKNUM",ordersResponse.getTrackingNum());
+                intent.putExtra("TRACKNUM", ordersResponse.getTrackingNum());
                 startActivity(intent);
 
 
@@ -168,8 +158,8 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
         ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
 
         OrderRequest orderRequest = new OrderRequest(PreferenceUtil.getValueInt(getActivity(), PreferenceUtil.USER_ID), ordersResponse.getTrackingNum());
-
-        Call<BaseResponse> call = apiInterface.updateDeliveryProgressStatus(orderRequest);
+        String token = PreferenceUtil.getValueString(getActivity(), PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(getActivity(), PreferenceUtil.AUTH_TOKEN);
+        Call<BaseResponse> call = apiInterface.updateDeliveryProgressStatus(token,orderRequest);
         call.enqueue(new Callback<BaseResponse>() {
             @Override
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
@@ -180,7 +170,7 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
                 if (baseResponse.getSuccess()) {
                     System.out.println("InProgressToOnDelivery");
 
-                    PreferenceUtil.setValueString(getActivity(),PreferenceUtil.TRACKING_NUM,ordersResponse.getTrackingNum());
+                    PreferenceUtil.setValueString(getActivity(), PreferenceUtil.TRACKING_NUM, ordersResponse.getTrackingNum());
 
                 }
 

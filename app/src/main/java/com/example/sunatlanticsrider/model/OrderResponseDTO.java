@@ -9,7 +9,6 @@ public class OrderResponseDTO {
     @SerializedName("data")
     List<OrdersResponse> ordersResponseList;
 
-
     public List<OrdersResponse> getOrdersResponseList() {
         return ordersResponseList;
     }

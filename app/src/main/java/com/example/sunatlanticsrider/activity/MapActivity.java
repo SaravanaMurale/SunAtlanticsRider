@@ -140,8 +140,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
 
         OrderRequest orderRequest = new OrderRequest(PreferenceUtil.getValueInt(MapActivity.this, PreferenceUtil.USER_ID), trackNum);
-
-        Call<BaseResponse> call = apiInterface.updateDeliveryProgressStatus(orderRequest);
+        String token = PreferenceUtil.getValueString(MapActivity.this, PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(MapActivity.this, PreferenceUtil.AUTH_TOKEN);
+        Call<BaseResponse> call = apiInterface.updateDeliveryProgressStatus(token, orderRequest);
 
         call.enqueue(new Callback<BaseResponse>() {
             @Override

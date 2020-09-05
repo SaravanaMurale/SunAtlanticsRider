@@ -41,4 +41,11 @@ public class MathUtil {
 
     }
 
+    public static Double stringToDouble(String stringVal) {
+
+        Double d = Double.parseDouble(stringVal);
+
+        return d;
+    }
+
 }

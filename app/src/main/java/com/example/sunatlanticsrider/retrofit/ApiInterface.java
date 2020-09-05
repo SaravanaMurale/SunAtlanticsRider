@@ -47,13 +47,17 @@ public interface ApiInterface {
     Call<BaseResponse> checkMobileNumberInServer(@Path("mobileNumber") String mobile);
 */
 
-    @GET(BaseURL.DOMAIN_NAME + "deliveryDetails/{userid}")
+    /*@GET(BaseURL.DOMAIN_NAME + "deliveryDetails/{userid}")
     @Headers({"Content-Type:application/json"})
     Call<OrderResponseDTO> getMyOrderDetails(@Header("Authorization") String token, @Path("userid") int userid);
+*/
+    @GET(BaseURL.DOMAIN_NAME + "deliveryDetails/{userid}")
+    @Headers({"Content-Type:application/json"})
+    Call<OrderResponseDTO> getMyCurrentOrders(@Header("Authorization") String token,@Path("userid") int user_id);
 
     @PUT(BaseURL.DOMAIN_NAME + "updateStatus")
     @Headers({"Content-Type:application/json"})
-    Call<BaseResponse> updateDeliveryProgressStatus(@Body OrderRequest orderRequest);
+    Call<BaseResponse> updateDeliveryProgressStatus(@Header("Authorization") String token,@Body OrderRequest orderRequest);
 
 
 }

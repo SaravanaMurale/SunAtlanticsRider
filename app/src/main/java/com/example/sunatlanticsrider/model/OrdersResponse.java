@@ -15,7 +15,7 @@ public class OrdersResponse {
     @SerializedName("trackno")
     private String trackingNum;
     @SerializedName("price")
-    private int price;
+    private Double price;
 
     private String deliveryAddress;
 
@@ -60,11 +60,11 @@ public class OrdersResponse {
         this.trackingNum = trackingNum;
     }
 
-    public int getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
