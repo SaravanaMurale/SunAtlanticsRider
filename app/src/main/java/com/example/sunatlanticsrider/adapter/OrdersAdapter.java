@@ -1,21 +1,36 @@
 package com.example.sunatlanticsrider.adapter;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Address;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sunatlanticsrider.R;
+import com.example.sunatlanticsrider.activity.MapActivity;
+import com.example.sunatlanticsrider.model.BaseResponse;
+import com.example.sunatlanticsrider.model.OrderRequest;
 import com.example.sunatlanticsrider.model.OrdersResponse;
+import com.example.sunatlanticsrider.retrofit.ApiClient;
+import com.example.sunatlanticsrider.retrofit.ApiInterface;
 import com.example.sunatlanticsrider.utils.GpsUtils;
+import com.example.sunatlanticsrider.utils.LoaderUtil;
 import com.example.sunatlanticsrider.utils.MathUtil;
+import com.example.sunatlanticsrider.utils.PreferenceUtil;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder> {
 
@@ -93,8 +108,89 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    String trackNum = PreferenceUtil.getValueString(mCtx, PreferenceUtil.TRACKING_NUM1);
+                    //int status1=PreferenceUtil.getValueInt(mCtx,PreferenceUtil.STATUS_ACCEPT1);
+
                     OrdersResponse ordersResponse = ordersResponseList.get(getAdapterPosition());
-                    onOrderClickListener.onOrderClick(ordersResponse);
+                    if (trackNum != ordersResponse.getTrackingNum()) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mCtx);
+
+                        builder.setMessage("Are you sure you want to");
+                        builder.setTitle("Order Taking");
+
+                        builder.setPositiveButton("TAKE ORDER", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                //OrdersResponse ordersResponse = ordersResponseList.get(getAdapterPosition());
+
+                                Toast.makeText(mCtx, "Thanks For Accepting", Toast.LENGTH_LONG).show();
+                                OrdersResponse ordersResponse = ordersResponseList.get(getAdapterPosition());
+
+                                PreferenceUtil.setValueString(mCtx, PreferenceUtil.TRACKING_NUM1, ordersResponse.getTrackingNum());
+                                //PreferenceUtil.setValueSInt(mCtx,PreferenceUtil.STATUS_ACCEPT1,1);
+
+                                updateOnDeliveryToDelivered(ordersResponse);
+
+                            /*OrdersResponse ordersResponse = ordersResponseList.get(getAdapterPosition());
+                            onOrderClickListener.onOrderClick(ordersResponse);*/
+
+                            }
+                        }).setNegativeButton("CANCEL ORDER", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                dialogInterface.dismiss();
+
+
+                            }
+                        });
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+
+
+                    } else if (trackNum == ordersResponse.getTrackingNum()) {
+
+                        onOrderClickListener.onOrderClick(ordersResponse);
+                    }
+
+
+                }
+            });
+
+        }
+
+        private void updateOnDeliveryToDelivered(OrdersResponse ordersResponse) {
+
+            final Dialog dialog = LoaderUtil.showProgressBar(mCtx);
+
+            ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
+
+            OrderRequest orderRequest = new OrderRequest(PreferenceUtil.getValueInt(mCtx, PreferenceUtil.USER_ID), ordersResponse.getTrackingNum());
+            String token = PreferenceUtil.getValueString(mCtx, PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(mCtx, PreferenceUtil.AUTH_TOKEN);
+            Call<BaseResponse> call = apiInterface.updateDeliveryProgressStatus(token, orderRequest);
+
+            call.enqueue(new Callback<BaseResponse>() {
+                @Override
+                public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+                    LoaderUtil.dismisProgressBar(mCtx, dialog);
+                    if (response.isSuccessful()) {
+
+
+                        OrdersResponse ordersResponse = ordersResponseList.get(getAdapterPosition());
+                        onOrderClickListener.onOrderClick(ordersResponse);
+
+
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<BaseResponse> call, Throwable t) {
 
                 }
             });

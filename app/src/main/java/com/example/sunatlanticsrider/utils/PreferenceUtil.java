@@ -21,7 +21,11 @@ public class PreferenceUtil {
     public static final String POINT_B_LAT = "point_b_lat";
     public static final String POINT_B_LONG = "point_b_long";
 
-    public static final String TRACKING_NUM="tracking_num";
+    public static final String TRACKING_NUM1="tracking_num1";
+    public static final String TRACKING_NUM2="tracking_num2";
+
+    public static final String STATUS_ACCEPT1="status_acept1";
+    public static final String STATUS_ACCEPT2="status_acept2";
 
     public static void setValueString(Context context, String key, String value) {
 

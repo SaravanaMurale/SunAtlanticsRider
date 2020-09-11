@@ -11,6 +11,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -88,7 +89,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         deliveryLocationLat = Double.parseDouble(intent.getStringExtra("LAT"));
         deliveryLocationLongi = Double.parseDouble(intent.getStringExtra("LON"));
 
-        System.out.println("MApDel"+deliveryLocationLat+" "+deliveryLocationLongi);
+        System.out.println("MApDel" + deliveryLocationLat + " " + deliveryLocationLongi);
 
         trackNum = intent.getStringExtra("TRACKNUM");
 
@@ -111,6 +112,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
 
+                builder.setMessage("Are you sure you delivered order");
+                builder.setTitle("Delivery Confirmation");
+
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -128,7 +132,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     }
                 });
 
-                builder.show();
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
 
             }
         });
@@ -212,7 +217,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                     }
                                 }, 2000);
 
-                               // callDirectionsAPI();
+                                // callDirectionsAPI();
 
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
@@ -293,7 +298,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     }
-
 
 
     private void addMarker(Double lat, Double longi) {
@@ -427,7 +431,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
 
-                LoaderUtil.dismisProgressBar(MapActivity.this,dialog);
+                LoaderUtil.dismisProgressBar(MapActivity.this, dialog);
                 if (response.isSuccessful()) {
                     Toast.makeText(MapActivity.this, "Thanks For Delivered", Toast.LENGTH_LONG).show();
                 }

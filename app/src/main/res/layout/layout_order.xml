@@ -9,18 +9,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/ten_dp"
-        android:layout_margin="@dimen/ten_dp">
+        android:layout_margin="@dimen/ten_dp" >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="@dimen/ten_dp"
+            >
 
             <TextView
                 android:id="@+id/trackNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/five_dp"
-                android:text="11111111" />
+                android:text="11111111"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                />
 
             <TextView
                 android:id="@+id/address"
@@ -29,6 +35,8 @@
                 android:text="@string/address"
                 android:layout_below="@id/trackNumber"
                 android:layout_marginTop="@dimen/five_dp"
+                android:fontFamily="sans-serif-condensed"
+
                 />
 
             <TextView
@@ -38,6 +46,7 @@
                 android:text="1000"
                 android:layout_below="@id/address"
                 android:layout_marginTop="@dimen/ten_dp"
+                android:fontFamily="sans-serif-condensed"
                 />
 
         </RelativeLayout>
