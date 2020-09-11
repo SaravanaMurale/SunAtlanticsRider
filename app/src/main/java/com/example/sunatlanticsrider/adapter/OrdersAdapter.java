@@ -113,7 +113,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
                     //int status1=PreferenceUtil.getValueInt(mCtx,PreferenceUtil.STATUS_ACCEPT1);
 
                     OrdersResponse ordersResponse = ordersResponseList.get(getAdapterPosition());
-                    if (trackNum != ordersResponse.getTrackingNum()) {
+                    if (!trackNum .equals( ordersResponse.getTrackingNum())) {
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(mCtx);
 

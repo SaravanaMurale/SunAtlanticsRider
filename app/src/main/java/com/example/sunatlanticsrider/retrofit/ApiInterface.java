@@ -9,6 +9,7 @@ import com.example.sunatlanticsrider.model.OrderRequest;
 import com.example.sunatlanticsrider.model.OrderResponseDTO;
 import com.example.sunatlanticsrider.model.OrdersResponse;
 import com.example.sunatlanticsrider.model.PasswordUpdateRequest;
+import com.example.sunatlanticsrider.model.PreviousOrderedResponseDTO;
 import com.example.sunatlanticsrider.model.UserNameUpdateRequest;
 import com.example.sunatlanticsrider.utils.BaseURL;
 
@@ -60,7 +61,7 @@ public interface ApiInterface {
 
     @GET(BaseURL.DOMAIN_NAME + "orderList/{userid}")
     @Headers({"Content-Type:application/json"})
-    Call<BaseResponse> getmyPreviousOrders(@Header("Authorization") String token,@Path("userid") int user_id);
+    Call<PreviousOrderedResponseDTO> getmyPreviousOrders(@Header("Authorization") String token, @Path("userid") int user_id);
 
     @PUT(BaseURL.DOMAIN_NAME + "updateStatus")
     @Headers({"Content-Type:application/json"})

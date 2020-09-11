@@ -1,13 +1,20 @@
 package com.example.sunatlanticsrider.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class MyPastOrderResponse {
 
+    @SerializedName("trackno")
     private String trackNo;
 
+   /* @SerializedName("latitude")
     private String fromLat;
+    @SerializedName("longitude")
     private String fromLongi;
-
+*/
+    @SerializedName("latitude")
     private String deliveryLat;
+    @SerializedName("longitude")
     private String deliveryLongi;
 
     private String fromFullAddress;
@@ -22,7 +29,7 @@ public class MyPastOrderResponse {
         this.trackNo = trackNo;
     }
 
-    public String getFromLat() {
+    /*public String getFromLat() {
         return fromLat;
     }
 
@@ -36,7 +43,7 @@ public class MyPastOrderResponse {
 
     public void setFromLongi(String fromLongi) {
         this.fromLongi = fromLongi;
-    }
+    }*/
 
     public String getDeliveryLat() {
         return deliveryLat;

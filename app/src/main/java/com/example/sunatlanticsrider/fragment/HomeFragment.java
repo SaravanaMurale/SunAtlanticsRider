@@ -71,6 +71,14 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+
+    }
+
     private void getMyCurrentOrderDetails() {
 
         ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
@@ -139,7 +147,7 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
                 String trackNum = PreferenceUtil.getValueString(getActivity(), PreferenceUtil.TRACKING_NUM2);
                 //int status2=PreferenceUtil.getValueInt(getActivity(),PreferenceUtil.STATUS_ACCEPT2);
 
-                if (trackNum!=ordersResponse.getTrackingNum() ) {
+                if (!trackNum.equals(ordersResponse.getTrackingNum()) ) {
                     updateStatusInProgressToOnDelivery(ordersResponse);
                 }
 

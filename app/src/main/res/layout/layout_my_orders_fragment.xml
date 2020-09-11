@@ -20,7 +20,9 @@
                 android:id="@+id/deliveredTrackNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sun011" />
+                android:fontFamily="sans-serif-condensed"
+                android:text="Sun011"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/fromText"
@@ -28,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/deliveredTrackNo"
                 android:layout_marginTop="@dimen/five_dp"
+                android:fontFamily="sans-serif-condensed"
                 android:text="From"
                 android:textStyle="bold" />
 
@@ -37,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/fromText"
                 android:layout_marginTop="@dimen/five_dp"
+                android:fontFamily="sans-serif-condensed"
                 android:text="Porur"
 
                 />
@@ -45,10 +49,9 @@
                 android:id="@+id/toText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/deliveredTrackNo"
-                android:layout_alignParentRight="true"
+                android:layout_below="@id/fromAddress"
                 android:layout_marginTop="@dimen/five_dp"
-                android:layout_marginRight="@dimen/five_dp"
+                android:fontFamily="sans-serif-condensed"
                 android:text="To"
                 android:textStyle="bold" />
 
@@ -56,10 +59,9 @@
                 android:id="@+id/toAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/fromText"
-                android:layout_alignParentRight="true"
+                android:layout_below="@id/toText"
                 android:layout_marginTop="@dimen/five_dp"
-                android:layout_marginRight="@dimen/five_dp"
+                android:fontFamily="sans-serif-condensed"
                 android:text="Guindy" />
 
 

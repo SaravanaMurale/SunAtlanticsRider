@@ -46,7 +46,7 @@ public class PastOrderAdapter extends RecyclerView.Adapter<PastOrderAdapter.Past
 
         holder.deliveredTrackNum.setText(myPastOrderResponseList.get(position).getTrackNo());
 
-        double fromLat = MathUtil.stringToDouble(myPastOrderResponseList.get(position).getFromLat());
+        /*double fromLat = MathUtil.stringToDouble(myPastOrderResponseList.get(position).getFromLat());
         double fromLongi = MathUtil.stringToDouble(myPastOrderResponseList.get(position).getFromLongi());
 
         List<Address> fromGeoAddresses = GpsUtils.getAddressFromMap(mCtx, fromLat, fromLongi);
@@ -54,7 +54,7 @@ public class PastOrderAdapter extends RecyclerView.Adapter<PastOrderAdapter.Past
 
         myPastOrderResponseList.get(position).setFromFullAddress(fullAddress);
 
-        holder.fromAddr.setText(myPastOrderResponseList.get(position).getFromFullAddress());
+        holder.fromAddr.setText(myPastOrderResponseList.get(position).getFromFullAddress()); */
 
 
         double toLat = MathUtil.stringToDouble(myPastOrderResponseList.get(position).getDeliveryLat());
