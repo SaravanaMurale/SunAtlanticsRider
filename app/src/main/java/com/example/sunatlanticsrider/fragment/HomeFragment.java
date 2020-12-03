@@ -65,8 +65,6 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
         myCurrentOrderRecyclerView.setAdapter(ordersAdapter);
 
 
-        getMyCurrentOrderDetails();
-
         return view;
 
     }
@@ -75,7 +73,7 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
     public void onResume() {
         super.onResume();
 
-
+        getMyCurrentOrderDetails();
 
     }
 
@@ -147,7 +145,7 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
                 String trackNum = PreferenceUtil.getValueString(getActivity(), PreferenceUtil.TRACKING_NUM2);
                 //int status2=PreferenceUtil.getValueInt(getActivity(),PreferenceUtil.STATUS_ACCEPT2);
 
-                if (!trackNum.equals(ordersResponse.getTrackingNum()) ) {
+                if (!trackNum.equals(ordersResponse.getTrackingNum())) {
                     updateStatusInProgressToOnDelivery(ordersResponse);
                 }
 

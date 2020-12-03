@@ -152,7 +152,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
                         alertDialog.show();
 
 
-                    } else if (trackNum == ordersResponse.getTrackingNum()) {
+                    } else if (trackNum .equals( ordersResponse.getTrackingNum())) {
 
                         onOrderClickListener.onOrderClick(ordersResponse);
                     }
