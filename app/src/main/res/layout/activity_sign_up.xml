@@ -7,32 +7,32 @@
     tools:context=".activity.SignUpActivity">
 
 
-    <RelativeLayout android:id="@+id/rel_Layout1"
+    <RelativeLayout
+        android:id="@+id/rel_Layout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/view1"
             android:layout_width="200dp"
             android:layout_height="500dp"
+            android:layout_alignParentLeft="true"
             android:layout_marginTop="35dp"
             android:layout_marginRight="10dp"
-            android:layout_alignParentLeft="true"
-            android:padding="5dp"
-            android:background="@drawable/corner">
+            android:background="@drawable/corner"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/loginText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
-                android:textSize="20sp"
-                android:layout_marginLeft="20dp"
-                android:textStyle="bold"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="5dp"
-                android:textColor="@color/white"/>
+                android:layout_marginLeft="20dp"
+                android:text="Login"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
@@ -40,43 +40,39 @@
             android:id="@+id/signUpText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign Up"
             android:layout_alignParentRight="true"
             android:layout_marginTop="50dp"
+            android:layout_marginRight="10dp"
+            android:text="Sign Up"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginRight="10dp"/>
-
-
-
+            android:textStyle="bold" />
 
 
         <RelativeLayout
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:layout_marginTop="80dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/background_shadow"
-            >
+            android:layout_marginTop="80dp"
+            android:background="@drawable/background_shadow">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
                 android:layout_centerHorizontal="true"
+                android:layout_margin="20dp"
                 android:drawableRight="@drawable/email"
-                android:layout_margin="20dp"/>
+                android:hint="Email" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
-                android:layout_centerHorizontal="true"
-                android:drawableRight="@drawable/password"
                 android:layout_below="@id/emailId"
-                android:layout_margin="20dp"/>
+                android:layout_centerHorizontal="true"
+                android:layout_margin="20dp"
+                android:drawableRight="@drawable/password"
+                android:hint="Password" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -84,17 +80,18 @@
                 android:layout_below="@+id/password"
                 android:layout_alignParentRight="true"
                 android:layout_margin="10dp"
-                android:text="Forgot Password"/>
+                android:text="Forgot Password" />
 
             <Button
+                android:id="@+id/btnRiderLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="15dp"
+                android:background="@drawable/corner"
                 android:text="Submit"
-                android:textColor="@color/white"
-                android:background="@drawable/corner"/>
+                android:textColor="@color/white" />
 
 
         </RelativeLayout>
@@ -106,15 +103,15 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
-            android:text="Dont have an account? Sign up"/>
+            android:text="Dont have an account? Sign up" />
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rel_Layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rel_Layout2"
-        android:visibility="visible"
+        android:visibility="gone"
 
         >
 
@@ -122,125 +119,121 @@
             android:id="@+id/view2"
             android:layout_width="200dp"
             android:layout_height="500dp"
-            android:layout_marginTop="35dp"
-            android:layout_marginLeft="10dp"
             android:layout_alignParentRight="true"
-            android:padding="5dp"
-            android:background="@drawable/corner">
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/corner"
+            android:padding="5dp">
             >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign Up"
-                android:textSize="20sp"
-                android:layout_marginLeft="20dp"
-                android:textStyle="bold"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="5dp"
-                android:textColor="@color/white"/>
+                android:layout_marginLeft="20dp"
+                android:text="Sign Up"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="50dp"
+            android:layout_marginRight="10dp"
+            android:text="Login"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginRight="10dp"/>
-
+            android:textStyle="bold" />
 
 
         <RelativeLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/background_shadow"
-            >
+            android:layout_marginTop="80dp"
+            android:background="@drawable/background_shadow">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signUpUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="UserName"
-                android:inputType="text"
                 android:layout_centerHorizontal="true"
+                android:layout_margin="20dp"
                 android:drawableRight="@drawable/user"
-                android:layout_margin="20dp"/>
+                android:hint="UserName"
+                android:inputType="text" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signUpMobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mobile Number"
-                android:inputType="phone"
-                android:layout_centerHorizontal="true"
-                android:drawableRight="@drawable/email"
                 android:layout_below="@id/signUpUserName"
-                android:layout_margin="20dp"/>
+                android:layout_centerHorizontal="true"
+                android:layout_margin="20dp"
+                android:drawableRight="@drawable/email"
+                android:hint="Mobile Number"
+                android:inputType="phone" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signUpEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/signUpMobile"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="20dp"
                 android:drawableRight="@drawable/password"
-                android:layout_margin="20dp"/>
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signUpPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
-                android:layout_centerHorizontal="true"
-                android:drawableRight="@drawable/password"
                 android:layout_below="@id/signUpEmail"
-                android:layout_margin="20dp"/>
+                android:layout_centerHorizontal="true"
+                android:layout_margin="20dp"
+                android:drawableRight="@drawable/password"
+                android:hint="Password" />
 
             <RelativeLayout
                 android:id="@+id/riderLocationBlock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/signUpPassword"
-                >
+                android:layout_below="@id/signUpPassword">
 
-            <TextView
-                android:id="@+id/riderLocationn"
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:text="Set Your Location"
-                android:gravity="center"
-               />
+                <TextView
+                    android:id="@+id/riderLocationn"
+                    android:layout_width="200dp"
+                    android:layout_height="100dp"
+                    android:gravity="center"
+                    android:text="Set Your Location" />
 
-            <ImageView
-                android:layout_height="50dp"
-                android:layout_width="50dp"
-                android:src="@drawable/arrow"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow"
 
 
-                />
+                    />
 
             </RelativeLayout>
 
 
-
             <Button
+                android:id="@+id/btnRiderSignUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="Submit"
-                android:layout_margin="8dp"
                 android:layout_below="@+id/riderLocationBlock"
-                android:background="@drawable/corner"/>
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:background="@drawable/corner"
+                android:text="Submit" />
 
 
         </RelativeLayout>
@@ -252,12 +245,10 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
-            android:text="Already an user ? Login"/>
+            android:text="Already an user ? Login" />
 
 
     </RelativeLayout>
-
-
 
 
 </RelativeLayout>

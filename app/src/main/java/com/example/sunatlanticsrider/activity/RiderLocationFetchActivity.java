@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sunatlanticsrider.R;
+import com.example.sunatlanticsrider.lilly.SignUpActivity;
 import com.example.sunatlanticsrider.model.BaseResponse;
 import com.example.sunatlanticsrider.model.OrderRequest;
 import com.example.sunatlanticsrider.retrofit.ApiClient;
@@ -83,7 +84,7 @@ public class RiderLocationFetchActivity extends AppCompatActivity implements OnM
         setContentView(R.layout.activity_rider_location_fetch);
 
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.riderMap);
         mapFragment.getMapAsync(this);
         mapView = mapFragment.getView();
 
@@ -107,6 +108,12 @@ public class RiderLocationFetchActivity extends AppCompatActivity implements OnM
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+
+                        Intent intent = new Intent(RiderLocationFetchActivity.this, SignUpActivity.class);
+
+                        intent.putExtra("RIDER_LAT", myLocationLat);
+                        intent.putExtra("RIDER_LONG", myLocationLon);
+                        startActivity(intent);
 
 
                     }
