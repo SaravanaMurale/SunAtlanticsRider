@@ -114,7 +114,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rel_Layout2"
-        android:visibility="gone"
+        android:visibility="visible"
 
         >
 
@@ -156,50 +156,80 @@
 
         <RelativeLayout
             android:layout_width="300dp"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
             android:layout_centerInParent="true"
             android:background="@drawable/background_shadow"
             >
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/emailId2"
+                android:id="@+id/signUpUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="UserName"
+                android:inputType="text"
                 android:layout_centerHorizontal="true"
                 android:drawableRight="@drawable/user"
                 android:layout_margin="20dp"/>
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password2"
+                android:id="@+id/signUpMobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="Mobile Number"
+                android:inputType="phone"
                 android:layout_centerHorizontal="true"
                 android:drawableRight="@drawable/email"
-                android:layout_below="@id/emailId2"
+                android:layout_below="@id/signUpUserName"
                 android:layout_margin="20dp"/>
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/emailId1"
+                android:id="@+id/signUpEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/signUpMobile"
+                android:drawableRight="@drawable/password"
+                android:layout_margin="20dp"/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signUpPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@id/password2"
                 android:drawableRight="@drawable/password"
+                android:layout_below="@id/signUpEmail"
                 android:layout_margin="20dp"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password1"
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:id="@+id/riderLocationBlock"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Confirm Password"
-                android:layout_centerHorizontal="true"
-                android:drawableRight="@drawable/password"
-                android:layout_below="@id/emailId1"
-                android:layout_margin="20dp"/>
+                android:layout_below="@id/signUpPassword"
+                >
+
+            <TextView
+                android:id="@+id/riderLocationn"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:text="Set Your Location"
+                android:gravity="center"
+               />
+
+            <ImageView
+                android:layout_height="50dp"
+                android:layout_width="50dp"
+                android:src="@drawable/arrow"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+
+
+                />
+
+            </RelativeLayout>
 
 
 
@@ -207,9 +237,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="15dp"
                 android:text="Submit"
+                android:layout_margin="8dp"
+                android:layout_below="@+id/riderLocationBlock"
                 android:background="@drawable/corner"/>
 
 

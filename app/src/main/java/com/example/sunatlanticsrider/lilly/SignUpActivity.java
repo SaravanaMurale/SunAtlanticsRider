@@ -2,6 +2,7 @@ package com.example.sunatlanticsrider.lilly;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sunatlanticsrider.R;
+import com.example.sunatlanticsrider.activity.RiderLocationFetchActivity;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -19,6 +21,8 @@ public class SignUpActivity extends AppCompatActivity {
     Button textView2;
 
     TextView loginText,signUpText;
+
+    RelativeLayout riderLocationBlock;
 
 
     @Override
@@ -30,6 +34,18 @@ public class SignUpActivity extends AppCompatActivity {
         layout2 = findViewById(R.id.rel_Layout2);
         textView1 = findViewById(R.id.login);
         textView2 = findViewById(R.id.signUp);
+
+        riderLocationBlock=(RelativeLayout)findViewById(R.id.riderLocationBlock);
+
+        riderLocationBlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(SignUpActivity.this, RiderLocationFetchActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         loginText=(TextView)findViewById(R.id.loginText);
         signUpText=(TextView)findViewById(R.id.signUpText);

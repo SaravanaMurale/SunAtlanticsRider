@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.MapActivity">
+
+    <RelativeLayout
+        android:id="@+id/riderMapBlock"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/getMyLocation"
+        android:layout_marginBottom="@dimen/ten_dp">
+
+        <fragment
+            android:id="@+id/riderMap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/getMyLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/five_dp"
+        android:background="@color/sun_atlantic_color"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Get My Location"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:enabled="false"
+
+        />
+
+</RelativeLayout>
