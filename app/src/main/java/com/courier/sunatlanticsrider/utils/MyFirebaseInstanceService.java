@@ -8,32 +8,48 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.courier.sunatlanticsrider.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Random;
 
+import static android.content.ContentValues.TAG;
+
 public class MyFirebaseInstanceService extends FirebaseMessagingService {
 
+
     public MyFirebaseInstanceService() {
-//        Toast.makeText(MyFirebaseInstanceService.this, "Push Notification Called", Toast.LENGTH_LONG).show();
+//        Toast.makeText(MyFirebaseInstanceService.this, "Push Notification Called", Toast.LENGTH_LONG).show();System.out.println("FCMCalled");
     }
+
+
+
+
 
     @Override
     public void onNewToken(String s) {
         super.onNewToken(s);
-
+        System.out.println("TokenCalled");
         Toast.makeText(MyFirebaseInstanceService.this, "Token Generated"+s, Toast.LENGTH_LONG).show();
         if (s == null) {
             System.out.println("FCMToken" + s);
         } else {
             System.out.println("FCMToken" + s);
         }
+
+
 
     }
 
@@ -91,7 +107,6 @@ public class MyFirebaseInstanceService extends FirebaseMessagingService {
 
 
     }
-
 
 
 
