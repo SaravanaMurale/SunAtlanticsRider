@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "531847397639",
+    "project_id": "sunatlanticsrider",
+    "storage_bucket": "sunatlanticsrider.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:531847397639:android:790a116e7d65e7ed9ac5a2",
+        "android_client_info": {
+          "package_name": "com.courier.sunatlanticsrider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "531847397639-3thm32952eef6egdn5erqdv73db5b4c6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.courier.sunatlanticsrider",
+            "certificate_hash": "c6b7085834d6191db55c72e2e81278ec29ec96ea"
+          }
+        },
+        {
+          "client_id": "531847397639-m0rd5jbh3f77t6tofisjqicmu1hf5ggd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcr0r-7bK2F6DBs2Bvdc_YozDnKHRjFzY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "531847397639-m0rd5jbh3f77t6tofisjqicmu1hf5ggd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
