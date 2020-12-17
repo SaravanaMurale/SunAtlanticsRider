@@ -42,6 +42,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     Dialog dialog;
 
+    Double riderLat,riderLongi;
+
     private EditText signupName, signupMobile, signupPassword, signupLat, signupLongi, signupDeliveryArea;
 
 
@@ -145,8 +147,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onResume();
 
         Intent intent = getIntent();
-        Double riderLat = intent.getDoubleExtra("RIDER_LAT", 0);
-        Double riderLongi = intent.getDoubleExtra("RIDER_LONG", 0);
+        riderLat = intent.getDoubleExtra("RIDER_LAT", 0);
+        riderLongi = intent.getDoubleExtra("RIDER_LONG", 0);
 
         if (riderLat != null && riderLat != 0 && riderLongi != null && riderLongi != 0) {
             List<Address> geoAddresses = GpsUtils.getAddressFromMap(SignUpActivity.this, riderLat, riderLongi);
