@@ -2,17 +2,23 @@ package com.courier.sunatlanticsrider.lilly;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.location.Address;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.courier.sunatlanticsrider.R;
+import com.courier.sunatlanticsrider.activity.LoginActivity;
 import com.courier.sunatlanticsrider.activity.RiderLocationFetchActivity;
 import com.courier.sunatlanticsrider.retrofit.ApiClient;
 import com.courier.sunatlanticsrider.retrofit.ApiInterface;
@@ -21,18 +27,22 @@ import com.courier.sunatlanticsrider.utils.LoaderUtil;
 
 import java.util.List;
 
+import static com.courier.sunatlanticsrider.utils.MathUtil.validateMobile;
+import static com.courier.sunatlanticsrider.utils.MathUtil.validatePassword;
+
 public class SignUpActivity extends AppCompatActivity {
 
-    RelativeLayout layout1;
-    RelativeLayout layout2;
-    Button textView1;
-    Button textView2,btnRiderSignUp;
 
-    TextView loginText, signUpText, riderLocationn;
+    Button textView1;
+    Button btnRiderSignUp;
+
+    TextView riderLocationn;
 
     RelativeLayout riderLocationBlock;
 
     Dialog dialog;
+
+    private EditText signupName, signupMobile, signupPassword, signupLat, signupLongi, signupDeliveryArea;
 
 
     @Override
@@ -40,14 +50,19 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        layout1 = findViewById(R.id.rel_Layout1);
-        layout2 = findViewById(R.id.rel_Layout2);
-        textView1 = findViewById(R.id.login);
-        textView2 = findViewById(R.id.signUp);
+
+        signupName = (EditText) findViewById(R.id.signUpUserName);
+        signupMobile = (EditText) findViewById(R.id.signUpMobile);
+        signupPassword = (EditText) findViewById(R.id.signUpPassword);
+
 
         riderLocationBlock = (RelativeLayout) findViewById(R.id.riderLocationBlock);
         riderLocationn = (TextView) findViewById(R.id.riderLocationn);
-        btnRiderSignUp=(Button)findViewById(R.id.btnRiderSignUp);
+        btnRiderSignUp = (Button) findViewById(R.id.btnRiderSignUp);
+
+        signupName.addTextChangedListener(new MyTextWatcher(signupName));
+        signupMobile.addTextChangedListener(new MyTextWatcher(signupMobile));
+        signupPassword.addTextChangedListener(new MyTextWatcher(signupPassword));
 
         btnRiderSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,48 +81,53 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        loginText = (TextView) findViewById(R.id.loginText);
-        signUpText = (TextView) findViewById(R.id.signUpText);
 
-        textView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(SignUpActivity.this, "View1", Toast.LENGTH_SHORT).show();
-                layout2.setVisibility(View.GONE);
-                layout1.setVisibility(View.VISIBLE);
+    }
+
+    private class MyTextWatcher implements TextWatcher {
+
+        private View view;
+
+        private MyTextWatcher(View view) {
+            this.view = view;
+        }
+
+        @SuppressLint("ResourceAsColor")
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            String name = signupName.getText().toString().trim();
+            String mobile = signupMobile.getText().toString().trim();
+            String password = signupPassword.getText().toString().trim();
+
+
+            btnRiderSignUp.setEnabled(validateMobile(name) && validateMobile(mobile) && validatePassword(password));
+
+            if (btnRiderSignUp.isEnabled()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    btnRiderSignUp.setBackground(getDrawable(R.drawable.rectangle_shpae));
+                    btnRiderSignUp.setTextColor(getApplication().getResources().getColor(R.color.white));
+                }
+            } else if (!btnRiderSignUp.isEnabled()) {
+                btnRiderSignUp.setEnabled(false);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    btnRiderSignUp.setBackground(getDrawable(R.color.btn_disable));
+                    btnRiderSignUp.setTextColor(getApplication().getResources().getColor(R.color.black));
+                }
             }
-        });
 
-        textView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                layout2.setVisibility(View.VISIBLE);
-                layout1.setVisibility(View.GONE);
-                Toast.makeText(SignUpActivity.this, "View2", Toast.LENGTH_SHORT).show();
+        }
 
-            }
-        });
+        @Override
+        public void afterTextChanged(Editable s) {
 
-        loginText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(SignUpActivity.this, "View1", Toast.LENGTH_SHORT).show();
-                layout2.setVisibility(View.GONE);
-                layout1.setVisibility(View.VISIBLE);
-            }
-        });
-
-        signUpText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                layout2.setVisibility(View.VISIBLE);
-                layout1.setVisibility(View.GONE);
-                Toast.makeText(SignUpActivity.this, "View2", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-
+        }
     }
 
     private void registerRider() {
@@ -116,7 +136,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
 
-       // RegisterRiderRequest registerRiderRequest=new RegisterRiderRequest()
+        // RegisterRiderRequest registerRiderRequest=new RegisterRiderRequest()
 
     }
 

@@ -12,43 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/view1"
-            android:layout_width="200dp"
-            android:layout_height="500dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="35dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/corner"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/loginText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="5dp"
-                android:layout_marginLeft="20dp"
-                android:text="Login"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/signUpText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="10dp"
-            android:text="Sign Up"
-            android:textSize="20sp"
-            android:textStyle="bold" />
 
 
-        <RelativeLayout
+
+
+
+       <!-- <RelativeLayout
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_centerInParent="true"
@@ -94,16 +63,16 @@
                 android:textColor="@color/white" />
 
 
-        </RelativeLayout>
+        </RelativeLayout>-->
 
-        <Button
+        <!--<Button
             android:id="@+id/signUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
-            android:text="Dont have an account? Sign up" />
+            android:text="Dont have an account? Sign up" />-->
 
     </RelativeLayout>
 
@@ -111,43 +80,10 @@
         android:id="@+id/rel_Layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+
 
         >
 
-        <RelativeLayout
-            android:id="@+id/view2"
-            android:layout_width="200dp"
-            android:layout_height="500dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="35dp"
-            android:background="@drawable/corner"
-            android:padding="5dp">
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="5dp"
-                android:layout_marginLeft="20dp"
-                android:text="Sign Up"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="10dp"
-            android:text="Login"
-            android:textSize="20sp"
-            android:textStyle="bold" />
 
 
         <RelativeLayout
@@ -187,7 +123,9 @@
                 android:layout_margin="20dp"
                 android:drawableRight="@drawable/password"
                 android:hint="Email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:visibility="gone"
+                />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signUpPassword"

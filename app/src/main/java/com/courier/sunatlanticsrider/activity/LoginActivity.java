@@ -148,6 +148,14 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
             String mobile = loginMobile.getText().toString().trim();
             String password = loginPassword.getText().toString().trim();
 
@@ -162,14 +170,9 @@ public class LoginActivity extends AppCompatActivity {
                 btnSignIn.setEnabled(false);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     btnSignIn.setBackground(getDrawable(R.color.btn_disable));
-                    btnSignIn.setTextColor(R.color.black);
+                    btnSignIn.setTextColor(getApplication().getResources().getColor(R.color.black));
                 }
             }
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
 
         }
 

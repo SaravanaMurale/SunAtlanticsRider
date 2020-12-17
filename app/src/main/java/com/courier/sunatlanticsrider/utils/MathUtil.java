@@ -25,6 +25,15 @@ public class MathUtil {
 
     }
 
+    public static boolean validateName(String name){
+        if(name.length()<=0){
+            return false;
+        }
+
+        return true;
+    }
+
+
     public static boolean validateMobile(String mobile) {
 
         if (mobile.length() < 10) {
