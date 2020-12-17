@@ -32,6 +32,8 @@ public class MyFirebaseInstanceService extends FirebaseMessagingService {
         super.onNewToken(s);
         PreferenceUtil.setValueString(getApplicationContext(), "notification_token", s);
         Toast.makeText(MyFirebaseInstanceService.this, "Token Generated"+s, Toast.LENGTH_LONG).show();System.out.println("FCMCalled");
+        Toast.makeText(MyFirebaseInstanceService.this, PreferenceUtil.getValueString(getApplicationContext(),"notification_token"), Toast.LENGTH_LONG).show();System.out.println("FCMCalled");
+
 
     }
 
