@@ -9,6 +9,7 @@ import com.courier.sunatlanticsrider.model.OrderRequest;
 import com.courier.sunatlanticsrider.model.OrderResponseDTO;
 import com.courier.sunatlanticsrider.model.PasswordUpdateRequest;
 import com.courier.sunatlanticsrider.model.PreviousOrderedResponseDTO;
+import com.courier.sunatlanticsrider.model.RegisterRiderRequest;
 import com.courier.sunatlanticsrider.model.UserNameUpdateRequest;
 import com.courier.sunatlanticsrider.utils.BaseURL;
 
@@ -54,7 +55,7 @@ public interface ApiInterface {
 */
     @GET(BaseURL.DOMAIN_NAME + "deliveryDetails/{userid}")
     @Headers({"Content-Type:application/json"})
-    Call<OrderResponseDTO> getMyCurrentOrders(@Header("Authorization") String token,@Path("userid") int user_id);
+    Call<OrderResponseDTO> getMyCurrentOrders(@Header("Authorization") String token, @Path("userid") int user_id);
 
     @GET(BaseURL.DOMAIN_NAME + "orderList/{userid}")
     @Headers({"Content-Type:application/json"})
@@ -62,7 +63,7 @@ public interface ApiInterface {
 
     @PUT(BaseURL.DOMAIN_NAME + "updateStatus")
     @Headers({"Content-Type:application/json"})
-    Call<BaseResponse> updateDeliveryProgressStatus(@Header("Authorization") String token,@Body OrderRequest orderRequest);
+    Call<BaseResponse> updateDeliveryProgressStatus(@Header("Authorization") String token, @Body OrderRequest orderRequest);
 
     @PUT(BaseURL.DOMAIN_NAME + "updateMobileno")
     @Headers({"Content-Type:application/json"})
@@ -78,6 +79,10 @@ public interface ApiInterface {
     @Headers({"Content-Type:application/json"})
     Call<BaseResponse> updatePassword(@Header("Authorization") String token, @Body PasswordUpdateRequest passwordUpdateRequest);
 
+
+    @POST(BaseURL.DOMAIN_NAME + "register")
+    @Headers({"Content-Type:application/json"})
+    Call<BaseResponse> registerRider(@Body RegisterRiderRequest registerRiderRequest);
 
 
 }

@@ -4,11 +4,23 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginAuthResponse extends ErrorResponse{
 
+
+    @SerializedName("success")
+    boolean status;
+
     @SerializedName("access_token")
     String authToken;
 
     @SerializedName("token_type")
     String tokenType;
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public String getAuthToken() {
         return authToken;

@@ -9,6 +9,17 @@ public class BaseResponse {
     @SerializedName("message")
     private String message;
 
+    @SerializedName("status")
+    private boolean status;
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
     public BaseResponse(boolean success, String message) {
         this.success = success;
         this.message = message;

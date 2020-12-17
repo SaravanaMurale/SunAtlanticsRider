@@ -14,8 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.courier.sunatlanticsrider.R;
+import com.courier.sunatlanticsrider.lilly.SignUpActivity;
 import com.courier.sunatlanticsrider.model.LoginAuthResponse;
 import com.courier.sunatlanticsrider.model.LoginRequest;
 import com.courier.sunatlanticsrider.model.LoginResponse;
@@ -38,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText loginMobile, loginPassword;
     private TextInputLayout inputLoginMobile, inputLoginPassword;
     private Button btnSignIn;
+    private TextView loginSignup;
 
     Typeface typeface;
     TextView othersignin;
@@ -55,6 +58,15 @@ public class LoginActivity extends AppCompatActivity {
 
         loginMobile = (EditText) findViewById(R.id.login_mobile);
         loginPassword = (EditText) findViewById(R.id.login_password);
+        loginSignup = (TextView) findViewById(R.id.loginSignup);
+
+        loginSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnSignIn = (Button) findViewById(R.id.btn_login);
 
@@ -82,22 +94,32 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginAuthResponse> call, Response<LoginAuthResponse> response) {
                 LoginAuthResponse loginAuthResponse = response.body();
-                if (loginAuthResponse.getAuthToken() != null && loginAuthResponse.getTokenType() != null) {
 
-                    PreferenceUtil.setValueString(LoginActivity.this, PreferenceUtil.AUTH_TOKEN, loginAuthResponse.getAuthToken());
-                    PreferenceUtil.setValueString(LoginActivity.this, PreferenceUtil.BEARER, loginAuthResponse.getTokenType());
+                if(loginAuthResponse.getStatus()){
 
+                    if (loginAuthResponse.getAuthToken() != null && loginAuthResponse.getTokenType() != null) {
+
+                        PreferenceUtil.setValueString(LoginActivity.this, PreferenceUtil.AUTH_TOKEN, loginAuthResponse.getAuthToken());
+                        PreferenceUtil.setValueString(LoginActivity.this, PreferenceUtil.BEARER, loginAuthResponse.getTokenType());
+
+
+                        LoaderUtil.dismisProgressBar(LoginActivity.this, dialog);
+
+                        getUserDetails();
+
+                    }
+                }else {
 
                     LoaderUtil.dismisProgressBar(LoginActivity.this, dialog);
-
-                    getUserDetails();
-
+                    Toast.makeText(LoginActivity.this,"You have endtered wrong username or password",Toast.LENGTH_LONG).show();
                 }
+
+
             }
 
             @Override
             public void onFailure(Call<LoginAuthResponse> call, Throwable t) {
-
+                LoaderUtil.dismisProgressBar(LoginActivity.this, dialog);
             }
         });
     }
@@ -124,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-
+                LoaderUtil.dismisProgressBar(LoginActivity.this, dialog);
             }
         });
     }
@@ -147,7 +169,6 @@ public class LoginActivity extends AppCompatActivity {
         @SuppressLint("ResourceAsColor")
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
 
 
         }

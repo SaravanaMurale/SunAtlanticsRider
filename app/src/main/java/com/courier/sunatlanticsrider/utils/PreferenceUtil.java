@@ -15,8 +15,8 @@ public class PreferenceUtil {
     public static final String USER_ID = "user_id";
     public static final String NO_VALUE = "null";
 
-    public static final String POINT_A_LAT = "point_a_lat";
-    public static final String POINT_A_LONG = "point_a_long";
+    public static final String USER_LAT = "point_a_lat";
+    public static final String USER_LONG = "point_a_long";
 
     public static final String POINT_B_LAT = "point_b_lat";
     public static final String POINT_B_LONG = "point_b_long";

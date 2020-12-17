@@ -1,5 +1,6 @@
 package com.courier.sunatlanticsrider.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.courier.sunatlanticsrider.R;
 import com.courier.sunatlanticsrider.lilly.SignUpActivity;
 import com.courier.sunatlanticsrider.utils.GpsUtils;
+import com.courier.sunatlanticsrider.utils.PermissionUtils;
+import com.courier.sunatlanticsrider.utils.PreferenceUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -97,11 +100,16 @@ public class RiderLocationFetchActivity extends AppCompatActivity implements OnM
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        Intent intent = new Intent(RiderLocationFetchActivity.this, SignUpActivity.class);
+                        PreferenceUtil.setValueString(RiderLocationFetchActivity.this,PreferenceUtil.USER_LAT,String.valueOf(myLocationLat));
+                        PreferenceUtil.setValueString(RiderLocationFetchActivity.this,PreferenceUtil.USER_LONG,String.valueOf(myLocationLon));
+
+                        onBackPressed();
+
+                        /*Intent intent = new Intent(RiderLocationFetchActivity.this, SignUpActivity.class);
 
                         intent.putExtra("RIDER_LAT", myLocationLat);
                         intent.putExtra("RIDER_LONG", myLocationLon);
-                        startActivity(intent);
+                        startActivity(intent);*/
 
 
                     }
@@ -121,7 +129,8 @@ public class RiderLocationFetchActivity extends AppCompatActivity implements OnM
             }
         });
 
-        enableGPS();
+
+            enableGPS();
 
 
     }

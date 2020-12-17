@@ -24,9 +24,10 @@
         <!--<activity android:name=".activity.SplashScreen"></activity>-->
         <activity android:name="com.courier.sunatlanticsrider.activity.MapActivity" />
         <activity android:name="com.courier.sunatlanticsrider.activity.LoginActivity" />
-        <!--<activity android:name=".activity.DrawerActivity"></activity>-->
+        <activity android:name=".activity.DrawerActivity"></activity>
+        <activity android:name=".lilly.SignUpActivity"/>
         <activity android:name="com.courier.sunatlanticsrider.activity.RiderLocationFetchActivity" />
-        <activity android:name="com.courier.sunatlanticsrider.activity.DrawerActivity">
+        <activity android:name=".activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

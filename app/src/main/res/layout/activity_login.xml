@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
-                android:gravity="center"
+                android:gravity="left"
                 android:hint="Mobile Number"
                 android:inputType="phone"
                 android:maxLength="10"
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
-                android:gravity="center"
+                android:gravity="left"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:maxLength="15"
@@ -103,7 +103,9 @@
             android:text="@string/forget_password"
             android:textColor="@color/sun_atlantic_color"
             android:textSize="@dimen/fifteen_sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="invisible"
+            />
 
         <TextView
             android:id="@+id/loginSignup"
