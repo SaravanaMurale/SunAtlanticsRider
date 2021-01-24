@@ -30,9 +30,9 @@ public class MyFirebaseInstanceService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
-        PreferenceUtil.setValueString(getApplicationContext(), "notification_token", s);
+        PreferenceUtil.setValueString(getApplicationContext(), PreferenceUtil.NOTIFICATION, s);
         Toast.makeText(MyFirebaseInstanceService.this, "Token Generated"+s, Toast.LENGTH_LONG).show();System.out.println("FCMCalled");
-        Toast.makeText(MyFirebaseInstanceService.this, PreferenceUtil.getValueString(getApplicationContext(),"notification_token"), Toast.LENGTH_LONG).show();System.out.println("FCMCalled");
+        Toast.makeText(MyFirebaseInstanceService.this, PreferenceUtil.getValueString(getApplicationContext(),PreferenceUtil.NOTIFICATION), Toast.LENGTH_LONG).show();System.out.println("FCMCalled");
 
 
     }

@@ -27,6 +27,8 @@ public class PreferenceUtil {
     public static final String STATUS_ACCEPT1="status_acept1";
     public static final String STATUS_ACCEPT2="status_acept2";
 
+    public static final String NOTIFICATION="notification_token";
+
     public static void setValueString(Context context, String key, String value) {
 
         if (context == null) return;

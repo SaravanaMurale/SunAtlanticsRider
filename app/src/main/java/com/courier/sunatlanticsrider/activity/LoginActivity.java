@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.courier.sunatlanticsrider.R;
 import com.courier.sunatlanticsrider.lilly.SignUpActivity;
+import com.courier.sunatlanticsrider.model.BaseResponse;
 import com.courier.sunatlanticsrider.model.LoginAuthResponse;
 import com.courier.sunatlanticsrider.model.LoginRequest;
 import com.courier.sunatlanticsrider.model.LoginResponse;
@@ -26,7 +28,10 @@ import com.courier.sunatlanticsrider.retrofit.ApiInterface;
 import com.courier.sunatlanticsrider.utils.LoaderUtil;
 import com.courier.sunatlanticsrider.utils.MathUtil;
 import com.courier.sunatlanticsrider.utils.PreferenceUtil;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,6 +57,25 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String newToken = instanceIdResult.getToken();
+
+
+                if(newToken!=null){
+                    saveFirebaseNotificationTokenInServer();
+                    PreferenceUtil.setValueString(LoginActivity.this, PreferenceUtil.NOTIFICATION, newToken);
+                }else {
+                    System.out.println("NOTOKENGENERATED");
+                }
+
+
+               
+            }
+        });
 
         typeface = MathUtil.getOctinPrisonFont(LoginActivity.this);
 
@@ -81,6 +105,46 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void saveFirebaseNotificationTokenInServer() {
+
+        dialog = LoaderUtil.showProgressBar(this);
+        ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
+
+        /*int userid=PreferenceUtil.getValueInt(LoginActivity.this,PreferenceUtil.USER_ID);
+       String pToken=PreferenceUtil.getValueString(LoginActivity.this,PreferenceUtil.NOTIFICATION);*/
+
+        LoginResponse loginResponse=new LoginResponse(PreferenceUtil.getValueInt(LoginActivity.this,PreferenceUtil.USER_ID),PreferenceUtil.getValueString(LoginActivity.this,PreferenceUtil.NOTIFICATION));
+
+        Call<BaseResponse> call=apiInterface.saveNotificationTokenInServer(PreferenceUtil.getValueString(LoginActivity.this, PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(LoginActivity.this, PreferenceUtil.AUTH_TOKEN),loginResponse);
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+                BaseResponse baseResponse=response.body();
+                LoaderUtil.dismisProgressBar(LoginActivity.this, dialog);
+                if(baseResponse!=null){
+                    if(baseResponse.getSuccess()){
+                        System.out.println("TokenInsertedSuccessfully");
+                    }else {
+                        System.out.println("TokenIsNotInsertedSuccessfully");
+                    }
+                }else {
+                    return;
+                }
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                LoaderUtil.dismisProgressBar(LoginActivity.this, dialog);
+            }
+        });
+
 
     }
 

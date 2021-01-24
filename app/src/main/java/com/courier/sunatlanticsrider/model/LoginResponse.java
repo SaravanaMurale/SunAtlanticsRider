@@ -14,6 +14,23 @@ public class LoginResponse {
     @SerializedName("mobile_no")
     private String userMobileNumber;
 
+    @SerializedName("token")
+    private String token;
+
+    public LoginResponse(int userId, String token) {
+        this.userId = userId;
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+
 
     public int getUserId() {
         return userId;
