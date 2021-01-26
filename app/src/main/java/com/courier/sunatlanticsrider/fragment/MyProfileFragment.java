@@ -61,13 +61,13 @@ public class MyProfileFragment extends Fragment {
         userNameBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog("Enter Your Name", 1);
+                openDialog("Update Name", 1);
             }
         });
         mobileNumberBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog("Enter Mobile Number", 2);
+                //openDialog("Update Mobile Number", 2);
             }
         });
 
@@ -82,7 +82,7 @@ public class MyProfileFragment extends Fragment {
         passwordBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog("Enter Password", 4);
+                openDialog("Update Password", 4);
             }
         });
 
