@@ -126,7 +126,7 @@ public class MyProfileFragment extends Fragment {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-
+                LoaderUtil.dismisProgressBar(getActivity(), dialog);
             }
         });
 
@@ -140,6 +140,10 @@ public class MyProfileFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         final View view = layoutInflater.inflate(R.layout.layout_dialog_userprofile, null);
+
+        final EditText update = (EditText) view.findViewById(R.id.updateName);
+        update.setHint(hintData);
+
 
         builder.setView(view);
 
