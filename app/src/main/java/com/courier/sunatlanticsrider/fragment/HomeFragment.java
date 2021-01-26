@@ -103,11 +103,20 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
                 OrderResponseDTO orderResponseDTO = response.body();
 
                 if (orderResponseDTO != null) {
+
                     List<OrdersResponse> ordersResponses = orderResponseDTO.getOrdersResponseList();
 
-                    ordersAdapter.setData(ordersResponses);
+                    if (ordersResponses.size() == 0) {
+                        LoaderUtil.dismisProgressBar(getActivity(), dialog);
+                        Toast.makeText(getActivity(), "Currently you dont have any order to deliver", Toast.LENGTH_LONG).show();
+                    } else if (ordersResponses.size() > 0) {
+                        ordersAdapter.setData(ordersResponses);
+                        LoaderUtil.dismisProgressBar(getActivity(), dialog);
+                    }
+
 
                 } else {
+                    LoaderUtil.dismisProgressBar(getActivity(), dialog);
                     Toast.makeText(getActivity(), "Currently you dont have any order to deliver", Toast.LENGTH_LONG).show();
                 }
 
@@ -192,7 +201,6 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
                     //PreferenceUtil.setValueSInt(getActivity(),PreferenceUtil.STATUS_ACCEPT2,2);
 
                 }
-
 
 
             }

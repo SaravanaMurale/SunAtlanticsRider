@@ -75,10 +75,18 @@ public class MyPastOrdersFragment extends Fragment {
                 PreviousOrderedResponseDTO previousOrderedResponseDTO = response.body();
 
                 if (previousOrderedResponseDTO != null) {
-                    List<MyPastOrderResponse> myPastOrderResponses = previousOrderedResponseDTO.getPreviousOrderedResponseDTOList();
-                    pastOrderAdapter.setData(myPastOrderResponses);
 
-                    LoaderUtil.dismisProgressBar(getActivity(), dialog);
+                    List<MyPastOrderResponse> myPastOrderResponses = previousOrderedResponseDTO.getPreviousOrderedResponseDTOList();
+
+                    if (myPastOrderResponses.size() == 0) {
+                        LoaderUtil.dismisProgressBar(getActivity(), dialog);
+                        Toast.makeText(getContext(), "You dont have any previous order", Toast.LENGTH_LONG).show();
+                    } else if (myPastOrderResponses.size() > 0) {
+                        pastOrderAdapter.setData(myPastOrderResponses);
+                        LoaderUtil.dismisProgressBar(getActivity(), dialog);
+                    }
+
+
                 } else {
                     LoaderUtil.dismisProgressBar(getActivity(), dialog);
                     Toast.makeText(getContext(), "You dont have any previous order", Toast.LENGTH_LONG).show();
