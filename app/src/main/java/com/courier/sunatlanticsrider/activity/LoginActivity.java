@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.courier.sunatlanticsrider.R;
 import com.courier.sunatlanticsrider.lilly.SignUpActivity;
 import com.courier.sunatlanticsrider.model.BaseResponse;
+import com.courier.sunatlanticsrider.model.GetToeknResponse;
 import com.courier.sunatlanticsrider.model.LoginAuthResponse;
 import com.courier.sunatlanticsrider.model.LoginRequest;
 import com.courier.sunatlanticsrider.model.LoginResponse;
@@ -51,12 +52,17 @@ public class LoginActivity extends AppCompatActivity {
     TextView othersignin;
 
     Dialog dialog;
+    String previousTokenFromServer;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //get Push Notification Token From Server
+
+        //getPushNotificationFromServer();
 
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, new OnSuccessListener<InstanceIdResult>() {
@@ -67,6 +73,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(newToken!=null){
                     saveFirebaseNotificationTokenInServer();
+                    String token=PreferenceUtil.getValueString(LoginActivity.this,PreferenceUtil.NOTIFICATION);
+                    System.out.println("TOKENGEN"+token);
                     PreferenceUtil.setValueString(LoginActivity.this, PreferenceUtil.NOTIFICATION, newToken);
                 }else {
                     System.out.println("NOTOKENGENERATED");
@@ -105,6 +113,39 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void getPushNotificationFromServer() {
+
+        dialog = LoaderUtil.showProgressBar(this);
+        ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
+
+        String token = PreferenceUtil.getValueString(LoginActivity.this, PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(LoginActivity.this, PreferenceUtil.AUTH_TOKEN);
+        int userId = PreferenceUtil.getValueInt(LoginActivity.this, PreferenceUtil.USER_ID);
+
+        Call<GetToeknResponse> call=apiInterface.getPushNotificationToken(token,userId);
+        call.enqueue(new Callback<GetToeknResponse>() {
+            @Override
+            public void onResponse(Call<GetToeknResponse> call, Response<GetToeknResponse> response) {
+
+                GetToeknResponse getToeknResponse=response.body();
+
+                if (getToeknResponse!=null){
+                    previousTokenFromServer=getToeknResponse.getToken();
+                }else {
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<GetToeknResponse> call, Throwable t) {
+
+            }
+        });
+
 
     }
 

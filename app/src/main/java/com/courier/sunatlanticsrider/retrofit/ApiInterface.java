@@ -1,6 +1,7 @@
 package com.courier.sunatlanticsrider.retrofit;
 
 import com.courier.sunatlanticsrider.model.BaseResponse;
+import com.courier.sunatlanticsrider.model.GetToeknResponse;
 import com.courier.sunatlanticsrider.model.LoginAuthResponse;
 import com.courier.sunatlanticsrider.model.LoginRequest;
 import com.courier.sunatlanticsrider.model.LoginResponse;
@@ -87,6 +88,10 @@ public interface ApiInterface {
     @POST(BaseURL.DOMAIN_NAME + "pushnotification")
     @Headers({"Content-Type:application/json"})
     Call<BaseResponse> saveNotificationTokenInServer(@Header("Authorization") String token,@Body LoginResponse loginResponse);
+
+    @GET(BaseURL.DOMAIN_NAME + "getNotification/{userid}")
+    @Headers({"Content-Type:application/json"})
+    Call<GetToeknResponse> getPushNotificationToken(@Header("Authorization") String token, @Path("userid") int user_id);
 
 
 
