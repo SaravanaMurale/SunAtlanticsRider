@@ -22,18 +22,18 @@ import java.util.Random;
 public class MyFirebaseInstanceService extends FirebaseMessagingService {
 
 
-    public MyFirebaseInstanceService() {
+    /*public MyFirebaseInstanceService() {
         Toast.makeText(MyFirebaseInstanceService.this, "Push Notification Called", Toast.LENGTH_LONG).show();System.out.println("FCMCalled");
-    }
+    }*/
 
 
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
         PreferenceUtil.setValueString(getApplicationContext(), PreferenceUtil.NOTIFICATION, s);
-        Toast.makeText(MyFirebaseInstanceService.this, "Token Generated"+s, Toast.LENGTH_LONG).show();System.out.println("FCMCalled");
+        /*Toast.makeText(MyFirebaseInstanceService.this, "Token Generated"+s, Toast.LENGTH_LONG).show();System.out.println("FCMCalled");
         Toast.makeText(MyFirebaseInstanceService.this, PreferenceUtil.getValueString(getApplicationContext(),PreferenceUtil.NOTIFICATION), Toast.LENGTH_LONG).show();System.out.println("FCMCalled");
-
+*/
 
     }
 
@@ -46,7 +46,7 @@ public class MyFirebaseInstanceService extends FirebaseMessagingService {
         String message = remoteMessage.getData().get("message");
         String clickAction = remoteMessage.getData().get("click_action");
 
-        Toast.makeText(MyFirebaseInstanceService.this, message + " " + title, Toast.LENGTH_LONG).show();
+       // Toast.makeText(MyFirebaseInstanceService.this, message + " " + title, Toast.LENGTH_LONG).show();
 
         pushNotificationBuilder(title, message, clickAction);
 

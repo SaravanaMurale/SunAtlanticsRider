@@ -165,7 +165,7 @@ public class DrawerActivity extends AppCompatActivity
 
     private void getPushNotificationFromServer() {
 
-        dialog = LoaderUtil.showProgressBar(this);
+        dialog = LoaderUtil.showProgressBar(DrawerActivity.this);
         ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
 
         String token = PreferenceUtil.getValueString(DrawerActivity.this, PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(DrawerActivity.this, PreferenceUtil.AUTH_TOKEN);
