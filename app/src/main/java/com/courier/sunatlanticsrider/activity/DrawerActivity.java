@@ -51,8 +51,8 @@ public class DrawerActivity extends AppCompatActivity
 
         getPushNotificationFromServer();
         String currentNotificationToken = PreferenceUtil.getValueString(DrawerActivity.this, PreferenceUtil.NOTIFICATION);
-        System.out.println("CURRENTTOKEN" + currentNotificationToken);
-        System.out.println("PREVIOUSTOKEN" + previousTokenFromServer);
+        //System.out.println("CURRENTTOKEN" + currentNotificationToken);
+        //System.out.println("PREVIOUSTOKEN" + previousTokenFromServer);
 
         new Handler().postDelayed(new Runnable() {
             @Override
