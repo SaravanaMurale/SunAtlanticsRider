@@ -94,6 +94,9 @@ public interface ApiInterface {
     @Headers({"Content-Type:application/json"})
     Call<GetToeknResponse> getPushNotificationToken(@Header("Authorization") String token, @Path("userid") int user_id);
 
+    @GET(BaseURL.DOMAIN_NAME + "firebaseNotification/{userid}")
+    @Headers({"Content-Type:application/json"})
+    Call<BaseResponse> triggerNotificationFromServer(@Header("Authorization") String token,@Path("userid") int user_id);
 
 
 }

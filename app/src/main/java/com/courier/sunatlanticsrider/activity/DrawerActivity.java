@@ -21,7 +21,6 @@ import com.courier.sunatlanticsrider.fragment.MyPastOrdersFragment;
 import com.courier.sunatlanticsrider.fragment.MyProfileFragment;
 import com.courier.sunatlanticsrider.model.BaseResponse;
 import com.courier.sunatlanticsrider.model.GetToeknResponse;
-import com.courier.sunatlanticsrider.model.LoginResponse;
 import com.courier.sunatlanticsrider.model.SavePushNotification;
 import com.courier.sunatlanticsrider.retrofit.ApiClient;
 import com.courier.sunatlanticsrider.retrofit.ApiInterface;
@@ -60,7 +59,7 @@ public class DrawerActivity extends AppCompatActivity
             public void run() {
 
             }
-        },1000);
+        }, 1000);
 
         if (previousTokenFromServer.isEmpty()) {
             previousTokenFromServer = "null";
@@ -72,6 +71,14 @@ public class DrawerActivity extends AppCompatActivity
         } else if (!previousTokenFromServer.equals(currentNotificationToken)) {
             saveFirebaseNotificationTokenInServer();
         }
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                triggerPushNotification();
+            }
+        }, 500);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -88,6 +95,32 @@ public class DrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void triggerPushNotification() {
+        dialog = LoaderUtil.showProgressBar(this);
+        ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
+
+        int userid = PreferenceUtil.getValueInt(DrawerActivity.this, PreferenceUtil.USER_ID);
+        Call<BaseResponse> call = apiInterface.triggerNotificationFromServer(PreferenceUtil.getValueString(DrawerActivity.this, PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(DrawerActivity.this, PreferenceUtil.AUTH_TOKEN), userid);
+
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+                System.out.println("NotificationTriggered");
+
+                LoaderUtil.dismisProgressBar(DrawerActivity.this, dialog);
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                System.out.println("NotificationIsNotTriggered");
+                LoaderUtil.dismisProgressBar(DrawerActivity.this, dialog);
+            }
+        });
+
+
     }
 
     private void saveFirebaseNotificationTokenInServer() {
@@ -128,6 +161,7 @@ public class DrawerActivity extends AppCompatActivity
 
 
     }
+
 
     private void getPushNotificationFromServer() {
 
