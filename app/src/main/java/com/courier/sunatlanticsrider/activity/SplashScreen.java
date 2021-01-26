@@ -28,6 +28,9 @@ public class SplashScreen extends AppCompatActivity {
 
         user_id = PreferenceUtil.getValueInt(this, PreferenceUtil.USER_ID);
 
+        PreferenceUtil.remove(SplashScreen.this,PreferenceUtil.USER_LAT);
+        PreferenceUtil.remove(SplashScreen.this,PreferenceUtil.USER_LONG);
+
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {

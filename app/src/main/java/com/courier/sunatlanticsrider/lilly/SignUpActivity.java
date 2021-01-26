@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.courier.sunatlanticsrider.R;
 import com.courier.sunatlanticsrider.activity.LoginActivity;
 import com.courier.sunatlanticsrider.activity.RiderLocationFetchActivity;
+import com.courier.sunatlanticsrider.activity.SplashScreen;
 import com.courier.sunatlanticsrider.model.BaseResponse;
 import com.courier.sunatlanticsrider.model.RegisterRiderRequest;
 import com.courier.sunatlanticsrider.retrofit.ApiClient;
@@ -38,6 +39,7 @@ import retrofit2.Response;
 
 import static com.courier.sunatlanticsrider.utils.AppConstant.LOCATION_PERMISSION_REQUEST_CODE;
 import static com.courier.sunatlanticsrider.utils.MathUtil.validateMobile;
+import static com.courier.sunatlanticsrider.utils.MathUtil.validateName;
 import static com.courier.sunatlanticsrider.utils.MathUtil.validatePassword;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -72,14 +74,40 @@ public class SignUpActivity extends AppCompatActivity {
         riderLocationn = (TextView) findViewById(R.id.riderLocationn);
         btnRiderSignUp = (Button) findViewById(R.id.btnRiderSignUp);
 
-        signupName.addTextChangedListener(new MyTextWatcher(signupName));
+        /*signupName.addTextChangedListener(new MyTextWatcher(signupName));
         signupMobile.addTextChangedListener(new MyTextWatcher(signupMobile));
-        signupPassword.addTextChangedListener(new MyTextWatcher(signupPassword));
+        signupPassword.addTextChangedListener(new MyTextWatcher(signupPassword));*/
 
         btnRiderSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerRider();
+                String userName = signupName.getText().toString().trim();
+                String userMobile = signupMobile.getText().toString().trim();
+                String userPassword = signupPassword.getText().toString().trim();
+
+                if (userName.isEmpty() || userName.equals("") || userName.equals(null)) {
+                    Toast.makeText(SignUpActivity.this, "Please Enter Name", Toast.LENGTH_LONG).show();
+                    return;
+
+                }
+                if (userMobile.isEmpty() || userMobile.equals("") || userMobile.equals(null)) {
+                    Toast.makeText(SignUpActivity.this, "Please Enter Mobile Number", Toast.LENGTH_LONG).show();
+                    return;
+
+                }
+
+                if (userPassword.isEmpty() || userPassword.equals("") || userPassword.equals(null)) {
+                    Toast.makeText(SignUpActivity.this, "Please Enter Password", Toast.LENGTH_LONG).show();
+                    return;
+
+                }
+
+
+                if (validateName(userName) && validateMobile(userMobile) && validatePassword(userPassword) && riderLat != null && riderLongi != null) {
+                    registerRider();
+                }
+
+
             }
         });
 
@@ -183,11 +211,15 @@ public class SignUpActivity extends AppCompatActivity {
 
                     if (baseResponse.getStatus()) {
 
+                        clearSignUpLocation();
+
                         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
 
                     } else {
+
+                        clearSignUpLocation();
 
                         Toast.makeText(SignUpActivity.this, "Your Already Registerd", Toast.LENGTH_LONG).show();
 
@@ -209,6 +241,12 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    private void clearSignUpLocation() {
+
+        PreferenceUtil.remove(SignUpActivity.this,PreferenceUtil.USER_LAT);
+        PreferenceUtil.remove(SignUpActivity.this,PreferenceUtil.USER_LONG);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -222,7 +260,7 @@ public class SignUpActivity extends AppCompatActivity {
         if (lat.equals("null") && longi.equals("null")) {
 
 
-        }else {
+        } else {
             riderLat = Double.valueOf(lat);
             riderLongi = Double.valueOf(longi);
 

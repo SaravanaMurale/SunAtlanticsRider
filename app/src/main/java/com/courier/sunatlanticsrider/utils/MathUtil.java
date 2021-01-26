@@ -6,13 +6,14 @@ import android.graphics.Typeface;
 public class MathUtil {
 
     public static boolean validatePassword(String password) {
-        if (password.length() <= 6) {
+        if (password.length() < 6) {
 
             // ToastUtils.getInstance(SignUpActivity.this).showLongToast(R.string.short_password);
             return false;
         }
         return true;
     }
+
 
     public static boolean passwordMatch(String password, String confirmPassword) {
 
@@ -25,14 +26,15 @@ public class MathUtil {
 
     }
 
-    public static boolean validateName(String name){
-        if(name.length()<=0){
+    public static boolean validateName(String name) {
+
+        if (name.length() < 3) {
             return false;
         }
 
         return true;
-    }
 
+    }
 
     public static boolean validateMobile(String mobile) {
 

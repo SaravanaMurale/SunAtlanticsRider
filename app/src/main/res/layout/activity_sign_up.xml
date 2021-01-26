@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     tools:context=".lilly.SignUpActivity">
 
     <LinearLayout
@@ -127,8 +128,9 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/ten_dp"
             android:layout_marginTop="@dimen/twenty_dp"
+            android:background="@drawable/rectangle_shpae"
+            android:textColor="@color/white"
             android:layout_marginRight="@dimen/ten_dp"
-            android:enabled="false"
             android:fontFamily="sans-serif-condensed"
             android:text="Sign Up"
             android:textColorHint="@color/sun_atlantic_color" />

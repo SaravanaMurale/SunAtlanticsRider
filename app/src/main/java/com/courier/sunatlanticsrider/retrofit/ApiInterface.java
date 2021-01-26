@@ -11,6 +11,7 @@ import com.courier.sunatlanticsrider.model.OrderResponseDTO;
 import com.courier.sunatlanticsrider.model.PasswordUpdateRequest;
 import com.courier.sunatlanticsrider.model.PreviousOrderedResponseDTO;
 import com.courier.sunatlanticsrider.model.RegisterRiderRequest;
+import com.courier.sunatlanticsrider.model.SavePushNotification;
 import com.courier.sunatlanticsrider.model.UserNameUpdateRequest;
 import com.courier.sunatlanticsrider.utils.BaseURL;
 
@@ -87,7 +88,7 @@ public interface ApiInterface {
 
     @POST(BaseURL.DOMAIN_NAME + "pushnotification")
     @Headers({"Content-Type:application/json"})
-    Call<BaseResponse> saveNotificationTokenInServer(@Header("Authorization") String token,@Body LoginResponse loginResponse);
+    Call<BaseResponse> saveNotificationTokenInServer(@Header("Authorization") String token,@Body SavePushNotification loginResponse);
 
     @GET(BaseURL.DOMAIN_NAME + "getNotification/{userid}")
     @Headers({"Content-Type:application/json"})

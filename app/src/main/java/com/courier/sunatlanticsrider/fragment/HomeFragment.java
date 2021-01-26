@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.courier.sunatlanticsrider.R;
+import com.courier.sunatlanticsrider.activity.DrawerActivity;
 import com.courier.sunatlanticsrider.activity.MapActivity;
 import com.courier.sunatlanticsrider.adapter.OrdersAdapter;
 import com.courier.sunatlanticsrider.model.BaseResponse;
@@ -79,6 +80,8 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
 
     private void getMyCurrentOrderDetails() {
 
+        dialog = LoaderUtil.showProgressBar(getActivity());
+
         ApiInterface apiInterface = ApiClient.getAPIClient().create(ApiInterface.class);
 
         String token = PreferenceUtil.getValueString(getActivity(), PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(getActivity(), PreferenceUtil.AUTH_TOKEN);
@@ -95,6 +98,7 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
             public void onResponse(Call<OrderResponseDTO> call, Response<OrderResponseDTO> response) {
 
                 //System.out.println("OrderResponse" + response.body());
+                LoaderUtil.dismisProgressBar(getActivity(), dialog);
 
                 OrderResponseDTO orderResponseDTO = response.body();
 
@@ -112,6 +116,7 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
 
             @Override
             public void onFailure(Call<OrderResponseDTO> call, Throwable t) {
+                LoaderUtil.dismisProgressBar(getActivity(), dialog);
                 System.out.println("Error" + t.getMessage().toString());
             }
         });
@@ -177,6 +182,7 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
 
                 BaseResponse baseResponse = response.body();
+                LoaderUtil.dismisProgressBar(getActivity(), dialog);
 
 
                 if (baseResponse.getSuccess()) {
@@ -187,13 +193,13 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
 
                 }
 
-                LoaderUtil.dismisProgressBar(getActivity(), dialog);
+
 
             }
 
             @Override
             public void onFailure(Call<BaseResponse> call, Throwable t) {
-
+                LoaderUtil.dismisProgressBar(getActivity(), dialog);
             }
         });
 

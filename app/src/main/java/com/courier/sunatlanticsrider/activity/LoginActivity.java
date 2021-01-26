@@ -24,6 +24,7 @@ import com.courier.sunatlanticsrider.model.GetToeknResponse;
 import com.courier.sunatlanticsrider.model.LoginAuthResponse;
 import com.courier.sunatlanticsrider.model.LoginRequest;
 import com.courier.sunatlanticsrider.model.LoginResponse;
+import com.courier.sunatlanticsrider.model.SavePushNotification;
 import com.courier.sunatlanticsrider.retrofit.ApiClient;
 import com.courier.sunatlanticsrider.retrofit.ApiInterface;
 import com.courier.sunatlanticsrider.utils.LoaderUtil;
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         //getPushNotificationFromServer();
 
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, new OnSuccessListener<InstanceIdResult>() {
+        /*FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 String newToken = instanceIdResult.getToken();
@@ -83,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
 
                
             }
-        });
+        });*/
 
         typeface = MathUtil.getOctinPrisonFont(LoginActivity.this);
 
@@ -157,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
         /*int userid=PreferenceUtil.getValueInt(LoginActivity.this,PreferenceUtil.USER_ID);
        String pToken=PreferenceUtil.getValueString(LoginActivity.this,PreferenceUtil.NOTIFICATION);*/
 
-        LoginResponse loginResponse=new LoginResponse(PreferenceUtil.getValueInt(LoginActivity.this,PreferenceUtil.USER_ID),PreferenceUtil.getValueString(LoginActivity.this,PreferenceUtil.NOTIFICATION));
+        SavePushNotification loginResponse=new SavePushNotification(PreferenceUtil.getValueInt(LoginActivity.this,PreferenceUtil.USER_ID),PreferenceUtil.getValueString(LoginActivity.this,PreferenceUtil.NOTIFICATION));
 
         Call<BaseResponse> call=apiInterface.saveNotificationTokenInServer(PreferenceUtil.getValueString(LoginActivity.this, PreferenceUtil.BEARER) + " " + PreferenceUtil.getValueString(LoginActivity.this, PreferenceUtil.AUTH_TOKEN),loginResponse);
         call.enqueue(new Callback<BaseResponse>() {
