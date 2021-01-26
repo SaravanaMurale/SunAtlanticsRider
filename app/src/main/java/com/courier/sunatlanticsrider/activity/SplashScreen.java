@@ -11,6 +11,9 @@ import com.courier.sunatlanticsrider.R;
 import com.courier.sunatlanticsrider.lilly.SignUpActivity;
 import com.courier.sunatlanticsrider.utils.PermissionUtils;
 import com.courier.sunatlanticsrider.utils.PreferenceUtil;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import static com.courier.sunatlanticsrider.utils.AppConstant.LOCATION_PERMISSION_REQUEST_CODE;
 
@@ -25,10 +28,30 @@ public class SplashScreen extends AppCompatActivity {
 
         user_id = PreferenceUtil.getValueInt(this, PreferenceUtil.USER_ID);
 
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String newToken = instanceIdResult.getToken();
+
+
+                if(newToken!=null){
+                    //saveFirebaseNotificationTokenInServer();
+                    PreferenceUtil.setValueString(SplashScreen.this, PreferenceUtil.NOTIFICATION, newToken);
+                    String token=PreferenceUtil.getValueString(SplashScreen.this,PreferenceUtil.NOTIFICATION);
+                    System.out.println("TOKENGEN"+token);
+                }else {
+                    System.out.println("NOTOKENGENERATED");
+                }
 
 
 
-                new SplashDownCountDown(3000, 1000).start();
+            }
+        });
+
+
+
+
+        new SplashDownCountDown(3000, 1000).start();
 
 
 

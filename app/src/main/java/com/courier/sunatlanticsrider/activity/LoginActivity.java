@@ -73,9 +73,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(newToken!=null){
                     saveFirebaseNotificationTokenInServer();
+                    PreferenceUtil.setValueString(LoginActivity.this, PreferenceUtil.NOTIFICATION, newToken);
                     String token=PreferenceUtil.getValueString(LoginActivity.this,PreferenceUtil.NOTIFICATION);
                     System.out.println("TOKENGEN"+token);
-                    PreferenceUtil.setValueString(LoginActivity.this, PreferenceUtil.NOTIFICATION, newToken);
                 }else {
                     System.out.println("NOTOKENGENERATED");
                 }
