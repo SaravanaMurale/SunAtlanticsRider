@@ -34,8 +34,8 @@ public class SplashScreen extends AppCompatActivity {
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
-                String newToken = instanceIdResult.getToken();
 
+                String newToken = instanceIdResult.getToken();
 
                 if(newToken!=null){
                     //saveFirebaseNotificationTokenInServer();
@@ -46,19 +46,11 @@ public class SplashScreen extends AppCompatActivity {
                     System.out.println("NOTOKENGENERATED");
                 }
 
-
-
             }
         });
 
 
-
-
         new SplashDownCountDown(3000, 1000).start();
-
-
-
-
 
     }
 

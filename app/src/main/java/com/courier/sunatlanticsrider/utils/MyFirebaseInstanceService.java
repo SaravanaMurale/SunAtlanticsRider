@@ -77,7 +77,7 @@ public class MyFirebaseInstanceService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setPriority(1)
                 .setDefaults(Notification.DEFAULT_ALL)
-                .setSmallIcon(R.drawable.ic_logout);
+                .setSmallIcon(R.drawable.splashscreen);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
