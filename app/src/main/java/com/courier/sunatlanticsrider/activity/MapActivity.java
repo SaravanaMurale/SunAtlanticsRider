@@ -430,7 +430,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 LoaderUtil.dismisProgressBar(MapActivity.this, dialog);
                 if (response.isSuccessful()) {
+
                     Toast.makeText(MapActivity.this, "Thanks For Delivered", Toast.LENGTH_LONG).show();
+
+                    Intent intent=new Intent(MapActivity.this,DrawerActivity.class);
+                    startActivity(intent);
+                    finish();
+
+
                 }
 
             }

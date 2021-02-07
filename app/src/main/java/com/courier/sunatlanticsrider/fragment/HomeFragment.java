@@ -158,8 +158,14 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
 
                 String trackNum = PreferenceUtil.getValueString(getActivity(), PreferenceUtil.TRACKING_NUM2);
                 //int status2=PreferenceUtil.getValueInt(getActivity(),PreferenceUtil.STATUS_ACCEPT2);
+                if (!trackNum.equals(ordersResponse.getTrackingNum())) {
+                    //Pending To Process
+                    updateStatusInProgressToOnDelivery(ordersResponse);
+                }
+
 
                 if (!trackNum.equals(ordersResponse.getTrackingNum())) {
+                    //Process To OnDelivery
                     updateStatusInProgressToOnDelivery(ordersResponse);
                 }
 
