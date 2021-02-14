@@ -241,6 +241,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 LoginResponse loginResponse = response.body();
 
+                System.out.println("DeliveryUserName"+loginResponse.getUserName());
+                PreferenceUtil.setValueString(LoginActivity.this,PreferenceUtil.USER_NAME,loginResponse.getUserName());
                 PreferenceUtil.setValueSInt(LoginActivity.this, PreferenceUtil.USER_ID, loginResponse.getUserId());
 
                 LoaderUtil.dismisProgressBar(LoginActivity.this, dialog);

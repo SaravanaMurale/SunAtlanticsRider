@@ -202,7 +202,7 @@ public class HomeFragment extends Fragment implements OrdersAdapter.OnOrderClick
 
                 if (baseResponse.getSuccess()) {
                     System.out.println("InProgressToOnDelivery");
-
+                    LoaderUtil.dismisProgressBar(getActivity(), dialog);
                     PreferenceUtil.setValueString(getActivity(), PreferenceUtil.TRACKING_NUM2, ordersResponse.getTrackingNum());
                     //PreferenceUtil.setValueSInt(getActivity(),PreferenceUtil.STATUS_ACCEPT2,2);
 

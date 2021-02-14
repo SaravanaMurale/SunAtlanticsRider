@@ -142,12 +142,15 @@ public class DrawerActivity extends AppCompatActivity
                 LoaderUtil.dismisProgressBar(DrawerActivity.this, dialog);
                 if (baseResponse != null) {
                     if (baseResponse.getSuccess()) {
+                        LoaderUtil.dismisProgressBar(DrawerActivity.this, dialog);
                         System.out.println("TokenInsertedSuccessfully");
                     } else {
+                        LoaderUtil.dismisProgressBar(DrawerActivity.this, dialog);
                         System.out.println("TokenIsNotInsertedSuccessfully");
                     }
                 } else {
                     //return;
+                    LoaderUtil.dismisProgressBar(DrawerActivity.this, dialog);
                 }
 
 
@@ -179,9 +182,10 @@ public class DrawerActivity extends AppCompatActivity
                 GetToeknResponse getToeknResponse = response.body();
                 LoaderUtil.dismisProgressBar(DrawerActivity.this, dialog);
                 if (getToeknResponse != null) {
+                    LoaderUtil.dismisProgressBar(DrawerActivity.this, dialog);
                     previousTokenFromServer = getToeknResponse.getToken();
                 } else {
-
+                    LoaderUtil.dismisProgressBar(DrawerActivity.this, dialog);
                 }
 
 

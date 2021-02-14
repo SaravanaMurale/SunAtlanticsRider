@@ -308,7 +308,7 @@ public class RiderLocationFetchActivity extends AppCompatActivity implements OnM
                 }, 1000);
 
 
-                Toast.makeText(RiderLocationFetchActivity.this, "GetDeviceLocationnn", Toast.LENGTH_LONG).show();
+                //Toast.makeText(RiderLocationFetchActivity.this, "GetDeviceLocation", Toast.LENGTH_LONG).show();
 
 
             }

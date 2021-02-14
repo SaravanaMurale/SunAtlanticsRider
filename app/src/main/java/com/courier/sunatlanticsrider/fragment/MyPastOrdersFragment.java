@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.courier.sunatlanticsrider.R;
+import com.courier.sunatlanticsrider.activity.DrawerActivity;
 import com.courier.sunatlanticsrider.adapter.PastOrderAdapter;
 import com.courier.sunatlanticsrider.model.MyPastOrderResponse;
 import com.courier.sunatlanticsrider.model.PreviousOrderedResponseDTO;
@@ -96,7 +97,7 @@ public class MyPastOrdersFragment extends Fragment {
 
             @Override
             public void onFailure(Call<PreviousOrderedResponseDTO> call, Throwable t) {
-
+                LoaderUtil.dismisProgressBar(getActivity(), dialog);
             }
         });
 

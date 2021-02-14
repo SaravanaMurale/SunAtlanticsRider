@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.courier.sunatlanticsrider.R;
+import com.courier.sunatlanticsrider.lilly.SignUpActivity;
 import com.courier.sunatlanticsrider.model.BaseResponse;
 import com.courier.sunatlanticsrider.model.OrderRequest;
 import com.courier.sunatlanticsrider.retrofit.ApiClient;
@@ -44,6 +46,8 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -298,11 +302,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     private void addMarker(Double lat, Double longi) {
-        myCurrentLocation = new MarkerOptions().position(new LatLng(myLocationLat, myLocationLon)).title("Murali");
+        myCurrentLocation = new MarkerOptions().position(new LatLng(myLocationLat, myLocationLon)).title(PreferenceUtil.getValueString(MapActivity.this,PreferenceUtil.USER_NAME));
         myCurrentLocationMarker = mGoogleMap.addMarker(myCurrentLocation);
         myCurrentLocationMarker.showInfoWindow();
 
-        deliveryLocation = new MarkerOptions().position(new LatLng(deliveryLocationLat, deliveryLocationLongi)).title("Guindy");
+        List<Address> geoAddresses = GpsUtils.getAddressFromMap(MapActivity.this, deliveryLocationLat, deliveryLocationLongi);
+        String riderDeliveryArea = GpsUtils.getDeliveryAreaName(geoAddresses);
+        if(riderDeliveryArea!=null){
+            riderDeliveryArea=riderDeliveryArea;
+        }else{
+            riderDeliveryArea="Delivery Point";
+        }
+
+        deliveryLocation = new MarkerOptions().position(new LatLng(deliveryLocationLat, deliveryLocationLongi)).title(riderDeliveryArea);
         deliveryLocationMarker = mGoogleMap.addMarker(deliveryLocation);
         deliveryLocationMarker.showInfoWindow();
 
@@ -390,7 +402,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }, 1000);
 
 
-                Toast.makeText(MapActivity.this, "GetDeviceLocationnn", Toast.LENGTH_LONG).show();
+                Toast.makeText(MapActivity.this, "GetDeviceLocation", Toast.LENGTH_LONG).show();
 
 
             }

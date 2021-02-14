@@ -148,6 +148,31 @@ public class GpsUtils {
 
     }
 
+
+    public static String getDeliveryAreaName(List<Address> geoAddresses) {
+
+        String fullAddress = "";
+
+        if (geoAddresses.size() != 0) {
+
+            String address = geoAddresses.get(0).getAddressLine(0);
+            String area = geoAddresses.get(0).getLocality();
+            String city = geoAddresses.get(0).getAdminArea();
+            String country = geoAddresses.get(0).getCountryName();
+            String postalCode = geoAddresses.get(0).getPostalCode();
+            String subAdminArea = geoAddresses.get(0).getSubAdminArea();
+
+            fullAddress = city;
+        }
+
+        return fullAddress;
+
+    }
+
+
+
+
+
     /*Double lat1=12.9929;
         Double lon1=80.2219;
 
@@ -157,26 +182,6 @@ public class GpsUtils {
        Double km= distance(lat1,lon1,lat2,lon2);*/
 
 
-    private double distance(double storeLatitute, double storeLongitute, double deliveryLat, double deliveryLon) {
-        double theta = storeLongitute - deliveryLon;
-        double dist = Math.sin(deg2rad(storeLatitute))
-                * Math.sin(deg2rad(deliveryLat))
-                + Math.cos(deg2rad(storeLatitute))
-                * Math.cos(deg2rad(deliveryLat))
-                * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        return (dist);
-    }
-
-    private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    private double rad2deg(double rad) {
-        return (rad * 180.0 / Math.PI);
-    }
 
 
 }
