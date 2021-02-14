@@ -328,7 +328,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
         } else {
-            System.out.println("MyPositionURL" + myCurrentLocation.getPosition() + " " + deliveryLocation.getPosition());
+            //System.out.println("MyPositionURL" + myCurrentLocation.getPosition() + " " + deliveryLocation.getPosition());
             String url = getUrl(myCurrentLocation.getPosition(), deliveryLocation.getPosition(), "driving");
             new FetchURL(MapActivity.this).execute(url, "driving");
 
@@ -456,7 +456,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             @Override
             public void onFailure(Call<BaseResponse> call, Throwable t) {
-
+                LoaderUtil.dismisProgressBar(MapActivity.this, dialog);
             }
         });
 

@@ -161,4 +161,27 @@
     </RelativeLayout>
 
 
+    <RelativeLayout
+        android:id="@+id/updateMyLocationBlock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordBlock"
+        android:layout_marginTop="@dimen/twenty_sp"
+        android:padding="@dimen/ten_dp">
+
+        <TextView
+            android:id="@+id/updateLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location Update" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/arrow" />
+
+    </RelativeLayout>
+
+
 </RelativeLayout>

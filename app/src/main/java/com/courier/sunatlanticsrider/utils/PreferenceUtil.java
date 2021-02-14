@@ -19,8 +19,8 @@ public class PreferenceUtil {
     public static final String USER_LAT = "point_a_lat";
     public static final String USER_LONG = "point_a_long";
 
-    public static final String POINT_B_LAT = "point_b_lat";
-    public static final String POINT_B_LONG = "point_b_long";
+    public static final String UPDATE_LAT = "update_lat";
+    public static final String UPDATE_LONG = "update_long";
 
     public static final String TRACKING_NUM1="tracking_num1";
     public static final String TRACKING_NUM2="tracking_num2";

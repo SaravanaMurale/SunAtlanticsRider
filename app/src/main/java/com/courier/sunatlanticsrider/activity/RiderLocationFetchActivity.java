@@ -103,6 +103,10 @@ public class RiderLocationFetchActivity extends AppCompatActivity implements OnM
                         PreferenceUtil.setValueString(RiderLocationFetchActivity.this,PreferenceUtil.USER_LAT,String.valueOf(myLocationLat));
                         PreferenceUtil.setValueString(RiderLocationFetchActivity.this,PreferenceUtil.USER_LONG,String.valueOf(myLocationLon));
 
+
+                        PreferenceUtil.setValueString(RiderLocationFetchActivity.this,PreferenceUtil.UPDATE_LAT,String.valueOf(myLocationLat));
+                        PreferenceUtil.setValueString(RiderLocationFetchActivity.this,PreferenceUtil.UPDATE_LONG,String.valueOf(myLocationLon));
+
                         onBackPressed();
 
                         /*Intent intent = new Intent(RiderLocationFetchActivity.this, SignUpActivity.class);

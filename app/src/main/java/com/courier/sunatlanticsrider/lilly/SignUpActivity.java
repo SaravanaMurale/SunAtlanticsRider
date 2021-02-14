@@ -255,7 +255,7 @@ public class SignUpActivity extends AppCompatActivity {
         String lat = PreferenceUtil.getValueString(SignUpActivity.this, PreferenceUtil.USER_LAT);
         String longi = PreferenceUtil.getValueString(SignUpActivity.this, PreferenceUtil.USER_LONG);
 
-        System.out.println("value" + lat + " " + longi);
+        //System.out.println("value" + lat + " " + longi);
 
         if (lat.equals("null") && longi.equals("null")) {
 

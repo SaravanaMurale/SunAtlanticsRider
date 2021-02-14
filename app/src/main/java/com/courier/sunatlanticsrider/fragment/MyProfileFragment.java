@@ -3,6 +3,8 @@ package com.courier.sunatlanticsrider.fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Address;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.courier.sunatlanticsrider.R;
+import com.courier.sunatlanticsrider.activity.UpdateLocationMapActivity;
+import com.courier.sunatlanticsrider.lilly.SignUpActivity;
 import com.courier.sunatlanticsrider.model.BaseResponse;
 import com.courier.sunatlanticsrider.model.EmailUpdateRequest;
 import com.courier.sunatlanticsrider.model.LoginResponse;
@@ -25,8 +29,11 @@ import com.courier.sunatlanticsrider.model.PasswordUpdateRequest;
 import com.courier.sunatlanticsrider.model.UserNameUpdateRequest;
 import com.courier.sunatlanticsrider.retrofit.ApiClient;
 import com.courier.sunatlanticsrider.retrofit.ApiInterface;
+import com.courier.sunatlanticsrider.utils.GpsUtils;
 import com.courier.sunatlanticsrider.utils.LoaderUtil;
 import com.courier.sunatlanticsrider.utils.PreferenceUtil;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,9 +41,9 @@ import retrofit2.Response;
 
 public class MyProfileFragment extends Fragment {
 
-    RelativeLayout userNameBlock, mobileNumberBlock, emailBlock, passwordBlock;
+    RelativeLayout userNameBlock, mobileNumberBlock, emailBlock, passwordBlock,updateMyLocationBlock;
 
-    TextView userNameEditText, mobileNumberEditText, emailEditText;
+    TextView userNameEditText, mobileNumberEditText, emailEditText,updateLocation;
 
     String userName, userEmail, userMobile;
 
@@ -51,10 +58,12 @@ public class MyProfileFragment extends Fragment {
         mobileNumberBlock = (RelativeLayout) view.findViewById(R.id.mobileNumberBlock);
         emailBlock = (RelativeLayout) view.findViewById(R.id.emailBlock);
         passwordBlock = (RelativeLayout) view.findViewById(R.id.passwordBlock);
+        updateMyLocationBlock = (RelativeLayout) view.findViewById(R.id.updateMyLocationBlock);
 
         userNameEditText = (TextView) view.findViewById(R.id.userName);
         mobileNumberEditText = (TextView) view.findViewById(R.id.mobileNumber);
         emailEditText = (TextView) view.findViewById(R.id.email);
+        updateLocation=(TextView)view.findViewById(R.id.updateLocation);
 
         dogetUserDetails();
 
@@ -86,8 +95,48 @@ public class MyProfileFragment extends Fragment {
             }
         });
 
+        updateMyLocationBlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(), UpdateLocationMapActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getMyCurrentLocation();
+    }
+
+    private void getMyCurrentLocation() {
+
+        String lat = PreferenceUtil.getValueString(getActivity(), PreferenceUtil.UPDATE_LAT);
+        String longi = PreferenceUtil.getValueString(getActivity(), PreferenceUtil.UPDATE_LONG);
+
+        //System.out.println("value" + lat + " " + longi);(
+
+        if (lat.equals("null") && longi.equals("null")) {
+
+
+        } else {
+           Double riderLat = Double.valueOf(lat);
+            Double  riderLongi = Double.valueOf(longi);
+
+
+            List<Address> geoAddresses = GpsUtils.getAddressFromMap(getActivity(), riderLat, riderLongi);
+            String riderDeliveryAddress = GpsUtils.getFullAddress(geoAddresses);
+            updateLocation.setText(riderDeliveryAddress);
+
+        }
+
     }
 
     private void dogetUserDetails() {
@@ -222,4 +271,9 @@ public class MyProfileFragment extends Fragment {
 
 
     }
+
+
+
+
+
 }
